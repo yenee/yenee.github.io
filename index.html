@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 阿里山與嘉義三天兩夜行程、預訂待辦與交通班次查詢。">
+  <title>阿里山慢旅｜三天兩夜行程</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f3edda;
+      --paper-light: #fbf8ec;
+      --ink: #263d36;
+      --muted: #66746a;
+      --line: #c9c4a8;
+      --forest: #315d4d;
+      --forest-light: #d9e1cf;
+      --rust: #a64e35;
+      --gold: #b38a48;
+      --shadow: 0 18px 48px rgba(49, 56, 38, .13);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image: repeating-linear-gradient(0deg, rgba(86, 91, 61, .025) 0, rgba(86, 91, 61, .025) 1px, transparent 1px, transparent 5px);
+      font-family: "Noto Serif TC", "Songti TC", "PMingLiU", Georgia, serif;
+      line-height: 1.65;
+    }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    .page { width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(250px, .8fr); gap: 34px; align-items: center; padding: 48px 0 42px; }
+    .hero-copy { padding: 10px 0; }
+    .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--forest); font: 700 11px/1.3 "Segoe UI", sans-serif; letter-spacing: .14em; }
+    .eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--rust); }
+    h1 { max-width: 600px; margin: 15px 0 8px; font-size: clamp(36px, 5vw, 62px); line-height: 1.12; font-weight: 800; letter-spacing: 0; }
+    .subtitle { margin: 0; color: var(--muted); font-size: 17px; }
+    .trip-facts { display: flex; flex-wrap: wrap; gap: 12px 25px; margin: 0; }
+    .trip-facts div { min-width: 90px; }
+    .trip-facts dt { color: var(--muted); font: 700 10px/1.3 "Segoe UI", sans-serif; letter-spacing: .1em; }
+    .trip-facts dd { margin: 4px 0 0; font-size: 15px; font-weight: 700; }
+    .hero-art { display: block; width: 100%; max-height: 270px; overflow: visible; }
+    .navigation-wrap { position: sticky; z-index: 5; top: 0; padding: 9px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(243, 237, 218, .96); backdrop-filter: blur(12px); }
+    .main-tabs { display: flex; gap: 5px; overflow-x: auto; scrollbar-width: thin; }
+    .tab-button { flex: 0 0 auto; min-height: 42px; padding: 8px 17px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--muted); cursor: pointer; font-size: 14px; font-weight: 700; }
+    .tab-button[aria-selected="true"] { border-bottom-color: var(--rust); color: var(--ink); }
+    .tab-button:focus-visible, .day-button:focus-visible, .icon-button:focus-visible, input:focus-visible, .todo-check:focus-visible { outline: 3px solid rgba(166, 78, 53, .35); outline-offset: 2px; }
+    .navigation-inner { display: flex; align-items: center; gap: 12px; }
+    .navigation-inner .main-tabs { flex: 1; min-width: 0; }
+    .display-controls { display: flex; flex: 0 0 auto; align-items: center; gap: 8px; }
+    .layout-switch { display: flex; flex: 0 0 auto; padding: 3px; border: 1px solid var(--line); background: var(--paper-light); }
+    .layout-button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; padding: 5px 9px; border: 0; background: transparent; color: var(--muted); cursor: pointer; font: 700 11px/1 "Segoe UI", sans-serif; }
+    .layout-button svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .layout-button[aria-pressed="true"] { background: var(--forest); color: var(--paper-light); }
+    .text-size-button { min-height: 44px; padding-inline: 12px; border: 1px solid var(--line); background: var(--paper-light); font-size: 14px; }
+    main { min-height: 60vh; padding: 32px 0 68px; }
+    [hidden] { display: none !important; }
+    .section-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; margin-bottom: 18px; }
+    .section-heading h2 { margin: 0; font-size: 27px; line-height: 1.25; }
+    .section-heading p { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
+    .day-tabs { display: flex; gap: 6px; margin: 24px 0 22px; border-bottom: 1px solid var(--line); }
+    .day-button { padding: 9px 14px 10px; border: 0; border-bottom: 2px solid transparent; background: none; color: var(--muted); cursor: pointer; font-size: 13px; font-weight: 700; }
+    .day-button[aria-selected="true"] { border-color: var(--forest); color: var(--forest); }
+    .day-intro { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 14px; }
+    .day-intro h3 { margin: 0; font-size: 19px; }
+    .day-intro p { margin: 0; color: var(--muted); font-size: 12px; }
+    .schedule-tools { display: flex; align-items: center; gap: 10px; }
+    .search { width: min(250px, 42vw); min-height: 39px; padding: 7px 11px; border: 1px solid var(--line); border-radius: 3px; background: var(--paper-light); color: var(--ink); font-size: 13px; }
+    .timeline { position: relative; margin: 0; padding: 2px 0 2px 0; list-style: none; }
+    .timeline::before { content: ""; position: absolute; top: 14px; bottom: 14px; left: 82px; width: 1px; background: var(--line); }
+    .event { position: relative; display: grid; grid-template-columns: 62px 1fr; gap: 36px; padding: 13px 0 15px; border-bottom: 1px solid rgba(201, 196, 168, .58); }
+    .event::before { content: ""; position: absolute; top: 19px; left: 76px; width: 9px; height: 9px; border: 2px solid var(--paper); border-radius: 50%; background: var(--rust); box-shadow: 0 0 0 1px var(--rust); }
+    .event-time { padding-top: 1px; color: var(--forest); font: 700 13px/1.6 "Segoe UI", sans-serif; white-space: nowrap; }
+    .event-body { min-width: 0; }
+    .event-title { margin: 0; font-size: 15px; font-weight: 700; line-height: 1.5; }
+    .event-detail { margin: 3px 0 0; color: var(--muted); font-size: 12px; line-height: 1.65; white-space: pre-line; }
+    .event-kind { display: inline-block; margin-left: 8px; color: var(--rust); font: 700 9px "Segoe UI", sans-serif; letter-spacing: .08em; vertical-align: 2px; }
+    .notice { margin: 14px 0 0 98px; padding: 11px 14px; border-left: 3px solid var(--gold); background: rgba(179, 138, 72, .11); color: #665a3d; font-size: 12px; }
+    .todo-summary { display: flex; align-items: center; gap: 12px; color: var(--muted); font: 700 11px "Segoe UI", sans-serif; }
+    .progress-track { width: 110px; height: 5px; overflow: hidden; background: #d9d3bb; }
+    .progress-fill { width: 0; height: 100%; background: var(--forest); transition: width .25s ease; }
+    .todo-list { margin: 22px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    .todo-item { display: grid; grid-template-columns: 28px minmax(0, 1fr) minmax(130px, .7fr); gap: 12px; align-items: start; padding: 15px 0; border-bottom: 1px solid var(--line); }
+    .todo-check { width: 20px; height: 20px; margin: 3px 0 0; accent-color: var(--forest); cursor: pointer; }
+    .todo-name { margin: 0; font-size: 14px; font-weight: 700; }
+    .todo-meta { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+    .todo-status { color: var(--muted); font: 700 11px/1.6 "Segoe UI", sans-serif; text-align: right; }
+    .todo-item.is-done .todo-name { color: #747d70; text-decoration: line-through; text-decoration-color: #9ba18e; }
+    .todo-item.is-done .todo-status { color: var(--forest); }
+    .table-wrap { overflow-x: auto; border-top: 2px solid var(--forest); }
+    table { width: 100%; border-collapse: collapse; min-width: 620px; font-size: 13px; }
+    th, td { padding: 12px 13px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: rgba(217, 225, 207, .58); color: var(--forest); font-size: 11px; white-space: nowrap; }
+    td:first-child { font-weight: 700; white-space: nowrap; }
+    .transport-group { margin-top: 28px; }
+    .transport-group h3 { margin: 0 0 9px; font-size: 18px; }
+    .transport-note { margin: 12px 0 0; color: var(--muted); font-size: 12px; }
+    .memo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 34px; margin-top: 20px; }
+    .memo { padding: 17px 0; border-top: 1px solid var(--line); }
+    .memo h3 { margin: 0 0 6px; color: var(--forest); font-size: 15px; }
+    .memo p { margin: 0; color: var(--muted); font-size: 13px; }
+    .food-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
+    .food-list span { padding: 3px 8px; border: 1px solid var(--line); color: var(--ink); font-size: 11px; }
+    .hotel-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 20px 0 30px; border-block: 1px solid var(--line); }
+    .hotel-summary > div { min-width: 0; padding: 14px 18px 14px 0; }
+    .hotel-summary > div + div { padding-left: 18px; border-left: 1px solid var(--line); }
+    .hotel-summary dt { color: var(--muted); font: 700 10px/1.4 "Segoe UI", sans-serif; letter-spacing: .08em; }
+    .hotel-summary dd { margin: 5px 0 0; font-size: 15px; font-weight: 700; }
+    .hotel-summary a { color: var(--rust); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .departure-times { margin: 8px 0 0; padding: 0; list-style: none; }
+    .departure-times li { display: inline-block; margin: 0 7px 7px 0; padding: 3px 9px; border: 1px solid var(--line); color: var(--forest); font: 700 12px "Segoe UI", sans-serif; }
+    .packing-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 34px; margin-top: 20px; }
+    .packing-group { min-width: 0; padding: 17px 0 4px; border-top: 1px solid var(--line); }
+    .packing-group h3 { margin: 0 0 8px; color: var(--forest); font-size: 15px; }
+    .packing-list { margin: 0; padding: 0; list-style: none; }
+    .packing-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid rgba(201, 196, 168, .58); cursor: pointer; }
+    .packing-item input { flex: 0 0 auto; width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--forest); cursor: pointer; }
+    .packing-copy { display: grid; gap: 1px; min-width: 0; }
+    .packing-copy strong { font-size: 13px; }
+    .packing-copy small { color: var(--muted); font-size: 11px; }
+    .packing-item:has(input:checked) .packing-copy strong { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line); }
+    .source-note { margin-top: 34px; padding-top: 13px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    footer { padding: 16px 0 26px; border-top: 1px solid var(--line); color: var(--forest); font: 700 10px "Segoe UI", sans-serif; letter-spacing: .16em; text-align: center; }
+    @media (max-width: 720px) {
+      .page { width: min(100% - 30px, 560px); }
+      .hero { grid-template-columns: 1fr; gap: 8px; padding: 28px 0 24px; }
+      .hero-copy { padding: 0; }
+      h1 { font-size: clamp(36px, 9vw, 48px); }
+      .hero-art { width: min(100%, 360px); max-height: 205px; justify-self: center; }
+      .navigation-wrap { margin: 0 -15px; padding: 7px 15px; }
+      .navigation-inner { width: min(100% - 30px, 560px); flex-direction: column; align-items: stretch; gap: 3px; }
+      .display-controls { align-self: stretch; justify-content: flex-end; gap: 5px; margin-top: 4px; padding-top: 6px; border-top: 1px solid color-mix(in srgb, var(--line) 65%, transparent); }
+      .layout-switch { gap: 2px; padding: 0; border: 0; background: transparent; }
+      .layout-button { min-height: 34px; padding-inline: 8px; }
+      .layout-button[aria-pressed="true"] { background: var(--forest-light); color: var(--forest); }
+      .text-size-button { min-height: 36px; font-size: 12px; }
+      .tab-button { padding-inline: 12px; }
+      main { padding: 24px 0 50px; }
+      .section-heading { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .section-heading h2 { font-size: 24px; }
+      .day-intro { align-items: flex-start; flex-direction: column; gap: 3px; }
+      .timeline::before { left: 62px; }
+      .event { grid-template-columns: 45px minmax(0, 1fr); gap: 29px; }
+      .event::before { left: 56px; }
+      .event-time { font-size: 12px; }
+      .event-title { font-size: 14px; }
+      .notice { margin-left: 74px; }
+      .todo-item { grid-template-columns: 25px minmax(0, 1fr); gap: 8px; }
+      .todo-status { grid-column: 2; text-align: left; }
+      .todo-summary { flex-wrap: wrap; }
+      .memo-grid { grid-template-columns: 1fr; }
+      .hotel-summary { grid-template-columns: 1fr; }
+      .hotel-summary > div { padding: 11px 0; }
+      .hotel-summary > div + div { padding-left: 0; border-top: 1px solid var(--line); border-left: 0; }
+      .packing-grid { grid-template-columns: 1fr; }
+      .schedule-tools { width: 100%; }
+      .search { width: 100%; }
+    }
+    body[data-layout-mode="mobile"] .page { width: min(560px, calc(100% - 30px)); }
+    body[data-layout-mode="mobile"] .hero { grid-template-columns: 1fr; gap: 8px; padding: 28px 0 24px; }
+    body[data-layout-mode="mobile"] .hero-copy { padding: 0; }
+    body[data-layout-mode="mobile"] .hero-art { width: min(100%, 360px); max-height: 205px; justify-self: center; }
+    body[data-layout-mode="mobile"] .navigation-inner { width: min(560px, calc(100% - 30px)); flex-direction: column; align-items: stretch; gap: 3px; }
+    body[data-layout-mode="mobile"] .display-controls { align-self: stretch; justify-content: flex-end; gap: 5px; margin-top: 4px; padding-top: 6px; border-top: 1px solid color-mix(in srgb, var(--line) 65%, transparent); }
+    body[data-layout-mode="mobile"] .layout-switch { gap: 2px; padding: 0; border: 0; background: transparent; }
+    body[data-layout-mode="mobile"] .layout-button { min-height: 34px; padding-inline: 8px; }
+    body[data-layout-mode="mobile"] .layout-button[aria-pressed="true"] { background: var(--forest-light); color: var(--forest); }
+    body[data-layout-mode="mobile"] .text-size-button { min-height: 36px; font-size: 12px; }
+    body[data-layout-mode="mobile"] main { padding: 24px 0 50px; }
+    body[data-layout-mode="mobile"] .section-heading { align-items: flex-start; flex-direction: column; gap: 8px; }
+    body[data-layout-mode="mobile"] .section-heading h2 { font-size: 24px; }
+    body[data-layout-mode="mobile"] .day-intro { align-items: flex-start; flex-direction: column; gap: 3px; }
+    body[data-layout-mode="mobile"] .memo-grid,
+    body[data-layout-mode="mobile"] .packing-grid { grid-template-columns: 1fr; }
+    body[data-layout-mode="mobile"] .hotel-summary { grid-template-columns: 1fr; }
+    body[data-layout-mode="mobile"] .hotel-summary > div { padding: 11px 0; }
+    body[data-layout-mode="mobile"] .hotel-summary > div + div { padding-left: 0; border-top: 1px solid var(--line); border-left: 0; }
+    body[data-layout-mode="mobile"] .todo-item { grid-template-columns: 25px minmax(0, 1fr); gap: 8px; }
+    body[data-layout-mode="mobile"] .todo-status { grid-column: 2; text-align: left; }
+    body[data-text-size="large"] .eyebrow { font-size: 13px; }
+    body[data-text-size="large"] h1 { font-size: clamp(42px, 5vw, 68px); }
+    body[data-text-size="large"] .subtitle { font-size: 21px; }
+    body[data-text-size="large"] .trip-facts dt { font-size: 12px; }
+    body[data-text-size="large"] .trip-facts dd { font-size: 18px; }
+    body[data-text-size="large"] .tab-button { min-height: 48px; font-size: 17px; }
+    body[data-text-size="large"] .layout-button { min-height: 42px; font-size: 13px; }
+    body[data-text-size="large"] .section-heading h2 { font-size: 32px; }
+    body[data-text-size="large"] .section-heading p { font-size: 16px; }
+    body[data-text-size="large"] .day-button { font-size: 16px; }
+    body[data-text-size="large"] .day-intro h3 { font-size: 22px; }
+    body[data-text-size="large"] .day-intro p { font-size: 15px; }
+    body[data-text-size="large"] .search { min-height: 48px; font-size: 16px; }
+    body[data-text-size="large"] .event-time { font-size: 17px; }
+    body[data-text-size="large"] .event-title { font-size: 19px; }
+    body[data-text-size="large"] .event-detail { font-size: 15px; }
+    body[data-text-size="large"] .event-kind { font-size: 12px; }
+    body[data-text-size="large"] .notice { font-size: 15px; }
+    body[data-text-size="large"] .todo-summary { font-size: 14px; }
+    body[data-text-size="large"] .todo-name { font-size: 18px; }
+    body[data-text-size="large"] .todo-meta { font-size: 15px; }
+    body[data-text-size="large"] .todo-status { font-size: 14px; }
+    body[data-text-size="large"] table { font-size: 16px; }
+    body[data-text-size="large"] th { font-size: 14px; }
+    body[data-text-size="large"] th,
+    body[data-text-size="large"] td { padding: 14px 15px; }
+    body[data-text-size="large"] .transport-group h3 { font-size: 22px; }
+    body[data-text-size="large"] .transport-note { font-size: 15px; }
+    body[data-text-size="large"] .memo h3 { font-size: 18px; }
+    body[data-text-size="large"] .memo p { font-size: 16px; }
+    body[data-text-size="large"] .food-list span { font-size: 13px; }
+    body[data-text-size="large"] .hotel-summary dt { font-size: 12px; }
+    body[data-text-size="large"] .hotel-summary dd { font-size: 18px; }
+    body[data-text-size="large"] .departure-times li { font-size: 14px; }
+    body[data-text-size="large"] .packing-group h3 { font-size: 18px; }
+    body[data-text-size="large"] .packing-copy strong { font-size: 16px; }
+    body[data-text-size="large"] .packing-copy small { font-size: 14px; }
+    body[data-text-size="large"] .packing-item input { width: 22px; height: 22px; }
+    body[data-text-size="large"] .source-note { font-size: 14px; }
+    body[data-text-size="large"] footer { font-size: 12px; }
+    @media (max-width: 720px) {
+      body[data-layout-mode="desktop"] .hero { grid-template-columns: minmax(0, 1.2fr) minmax(110px, .8fr); gap: 8px; padding: 22px 0 20px; }
+      body[data-layout-mode="desktop"] .hero-art { width: 100%; max-height: 150px; }
+      body[data-layout-mode="desktop"] h1 { font-size: 34px; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .event, .todo-item, .memo { animation: rise .35s both; }
+      @keyframes rise { from { opacity: .4; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">ALISHAN · CHIAYI · 3 DAYS</div>
+        <h1>阿里山慢旅</h1>
+        <p class="subtitle">三天兩夜行程手帖</p>
+        <dl class="trip-facts">
+          <div><dt>TRAVEL DATES</dt><dd>11.22 – 11.24</dd></div>
+          <div><dt>FIRST NIGHT</dt><dd>阿里山閣</dd></div>
+          <div><dt>SECOND NIGHT</dt><dd>嘉義觀止</dd></div>
+        </dl>
+      </div>
+      <svg class="hero-art" viewBox="0 0 420 280" role="img" aria-labelledby="alishan-art-title alishan-art-description">
+        <title id="alishan-art-title">阿里山山線與森林小火車</title>
+        <desc id="alishan-art-description">復古印刷風格的層疊山巒、杉林與赭紅色森林列車。</desc>
+        <defs>
+          <pattern id="print-grain" width="13" height="13" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="3" r=".8" fill="#f3edda" opacity=".55" />
+            <circle cx="9" cy="10" r=".65" fill="#263d36" opacity=".18" />
+          </pattern>
+        </defs>
+        <circle cx="344" cy="62" r="24" fill="#d5a35b" opacity=".9" />
+        <path d="M8 172 82 75l36 42 57-79 74 105 53-75 109 112Z" fill="#91aaa0" />
+        <path d="m61 103 21-28 17 20-12-5-9 10-7-5Zm91-32 23-33 24 37-18-10-10 11-8-8Zm124 15 26-35 33 52-20-13-13 12-9-10Z" fill="#f3edda" />
+        <path d="m0 184 92-77 49 53 73-81 70 71 52-48 84 77v39H0Z" fill="#557a69" />
+        <path d="M0 203c70-18 126-8 188-22s142-17 232 0v42H0Z" fill="#315d4d" />
+        <g fill="#24493d">
+          <path d="m27 207 18-51 18 51h-12v25H39v-25Zm41 7 15-42 16 42H89v20H78v-20Zm276-4 18-54 19 54h-13v25h-11v-25Zm39 5 13-38 15 38h-11v18h-9v-18Z" />
+          <path d="m119 213 12-36 13 36h-9v17h-8v-17Zm194-2 14-42 15 42h-10v20h-9v-20Z" fill="#416b57" />
+        </g>
+        <path d="M42 228c82-17 192-15 338 4" fill="none" stroke="#d7c89e" stroke-width="4" />
+        <path d="M42 236c82-17 192-15 338 4" fill="none" stroke="#a64e35" stroke-width="2" />
+        <g stroke="#8a7959" stroke-width="2" opacity=".9">
+          <path d="m78 224 3 12m35-17 3 12m35-17 3 12m35-17 3 12m35-17 3 12m35-17 3 12m35-17 3 12m35-17 3 12m35-17 3 12" />
+        </g>
+        <g>
+          <path d="M79 171h55v35H79z" fill="#b95639" />
+          <path d="M84 176h11v10H84zm16 0h11v10h-11zm16 0h11v10h-11z" fill="#e6d9b8" />
+          <path d="M137 164h93v42h-93z" fill="#bd5739" />
+          <path d="M144 170h13v12h-13zm19 0h13v12h-13zm19 0h13v12h-13zm19 0h13v12h-13z" fill="#eadbb7" />
+          <path d="M228 153q0-12 13-12h28v65h-41z" fill="#a64e35" />
+          <path d="M243 146h19v18h-19z" fill="#e6d9b8" />
+          <path d="M269 157h47q18 0 24 15l8 24h-79z" fill="#a64e35" />
+          <path d="M278 164h15v13h-15zm21 0h15v13h-15z" fill="#eadbb7" />
+          <path d="M345 177h12v10h-12z" fill="#e7b767" />
+          <path d="M236 195h110" stroke="#463c32" stroke-width="5" />
+          <g fill="#373b34" stroke="#d5a35b" stroke-width="2">
+            <circle cx="101" cy="207" r="8" /><circle cx="128" cy="207" r="8" />
+            <circle cx="158" cy="207" r="8" /><circle cx="207" cy="207" r="8" />
+            <circle cx="246" cy="207" r="9" /><circle cx="319" cy="207" r="11" />
+          </g>
+        </g>
+        <path d="M0 0h420v280H0z" fill="url(#print-grain)" opacity=".45" />
+      </svg>
+    </header>
+
+    <div class="navigation-wrap">
+      <div class="navigation-inner page">
+      <nav class="main-tabs" role="tablist" aria-label="行程資訊分類">
+        <button class="tab-button" id="tab-itinerary" type="button" role="tab" aria-selected="true" aria-controls="panel-itinerary" data-view="itinerary">每日行程</button>
+        <button class="tab-button" id="tab-todos" type="button" role="tab" aria-selected="false" aria-controls="panel-todos" data-view="todos">預訂待辦</button>
+        <button class="tab-button" id="tab-transport" type="button" role="tab" aria-selected="false" aria-controls="panel-transport" data-view="transport">交通班次</button>
+        <button class="tab-button" id="tab-notes" type="button" role="tab" aria-selected="false" aria-controls="panel-notes" data-view="notes">行程備忘</button>
+        <button class="tab-button" id="tab-hotel" type="button" role="tab" aria-selected="false" aria-controls="panel-hotel" data-view="hotel">住宿指南</button>
+        <button class="tab-button" id="tab-packing" type="button" role="tab" aria-selected="false" aria-controls="panel-packing" data-view="packing">行李清單</button>
+      </nav>
+      <div class="display-controls">
+      <div class="layout-switch" role="group" aria-label="切換版面">
+        <button class="layout-button" type="button" data-layout-choice="desktop" aria-pressed="false" aria-label="切換電腦版版面">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="3" width="15" height="10.5" rx="1"/><path d="M7 17h6M10 13.5V17"/></svg><span>電腦版</span>
+        </button>
+        <button class="layout-button" type="button" data-layout-choice="mobile" aria-pressed="false" aria-label="切換手機版版面">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="5.5" y="1.8" width="9" height="16.4" rx="1.7"/><path d="M8.5 4h3M9 15.5h2"/></svg><span>手機版</span>
+        </button>
+      </div>
+      <button class="layout-button text-size-button" id="text-size-toggle" type="button" aria-pressed="false" aria-label="切換大字版">大字版</button>
+      </div>
+      </div>
+    </div>
+
+    <main>
+      <section id="panel-itinerary" role="tabpanel" aria-labelledby="tab-itinerary" data-panel="itinerary">
+        <div class="section-heading">
+          <div><h2>沿著山線慢慢走</h2><p>選擇日期查看當天的時間、移動方式與行程細節。</p></div>
+          <div class="schedule-tools"><input class="search" id="schedule-search" type="search" placeholder="搜尋當日行程" aria-label="搜尋當日行程"></div>
+        </div>
+        <div class="day-tabs" role="tablist" aria-label="選擇行程日期">
+          <button class="day-button" type="button" role="tab" aria-selected="true" data-day="0">Day 1 · 11/22</button>
+          <button class="day-button" type="button" role="tab" aria-selected="false" data-day="1">Day 2 · 11/23</button>
+          <button class="day-button" type="button" role="tab" aria-selected="false" data-day="2">Day 3 · 11/24</button>
+        </div>
+        <div id="day-content" aria-live="polite"></div>
+      </section>
+
+      <section id="panel-todos" role="tabpanel" aria-labelledby="tab-todos" data-panel="todos" hidden>
+        <div class="section-heading">
+          <div><h2>出發前，逐項確認</h2><p>已完成狀態會保存在這台裝置的瀏覽器。</p></div>
+          <div class="todo-summary"><span id="todo-count">0 / 0 已完成</span><span class="progress-track" aria-hidden="true"><span class="progress-fill" id="todo-progress"></span></span></div>
+        </div>
+        <ul class="todo-list" id="todo-list"></ul>
+        <p class="source-note">訂票與開放時間依原行程筆記整理；實際班次、座位及預約規則請以官方公告為準。</p>
+      </section>
+
+      <section id="panel-transport" role="tabpanel" aria-labelledby="tab-transport" data-panel="transport" hidden>
+        <div class="section-heading"><div><h2>山線交通時刻</h2><p>Day 2 · 阿里山 → 奮起湖 → 嘉義，方便比較下山選項。</p></div></div>
+        <div class="transport-group">
+          <h3>公車 / 台灣好行</h3>
+          <div class="table-wrap"><table>
+            <thead><tr><th>路線</th><th>阿里山</th><th>奮起湖</th><th>嘉義</th><th>備註</th></tr></thead>
+            <tbody>
+              <tr><td>嘉義縣公車 7322A</td><td>09:10</td><td>10:00</td><td>11:55・火車站</td><td>行程預計搭乘</td></tr>
+              <tr><td>台灣好行 7329A</td><td>10:10</td><td>11:00</td><td>13:10・高鐵站</td><td>全票 $99（阿里山 → 奮起湖）</td></tr>
+              <tr><td>台灣好行 7329A</td><td>12:20</td><td>13:20</td><td>15:20・高鐵站</td><td>全票 $99（阿里山 → 奮起湖）</td></tr>
+              <tr><td>台灣好行 7322D</td><td>14:10</td><td>15:10</td><td>17:10・火車站</td><td>全票 $99；奮起湖 → 嘉義台鐵站 $178</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="transport-group">
+          <h3>阿里山林業鐵路</h3>
+          <div class="table-wrap"><table>
+            <thead><tr><th>班次</th><th>阿里山</th><th>奮起湖</th><th>嘉義火車站</th><th>備註</th></tr></thead>
+            <tbody>
+              <tr><td>林鐵 8 次・阿里山號</td><td>11:50</td><td>13:19 抵達<br>13:29 開車</td><td>15:45</td><td>全段 $600</td></tr>
+              <tr><td>林鐵 2 次・阿里山號</td><td>—</td><td>13:50 抵達<br>14:31 開車</td><td>16:51</td><td>奮起湖區間 $384</td></tr>
+            </tbody>
+          </table></div>
+          <p class="transport-note">前 14 天優先販售全段票（$600），前 3 天才釋出奮起湖區間票（$384）；原筆記建議可先買全段、於奮起湖上車。行程表另記 14:20 搭阿里山號，請以乘車日前公告確認實際班次與上車時間。</p>
+        </div>
+      </section>
+
+      <section id="panel-notes" role="tabpanel" aria-labelledby="tab-notes" data-panel="notes" hidden>
+        <div class="section-heading"><div><h2>路上記得的事</h2><p>容易漏看的費用、末班車和沿途想吃的店。</p></div></div>
+        <div class="memo-grid">
+          <article class="memo"><h3>Day 1 · 神木線</h3><p>神木車站 → 阿里山車站末班車 16:10。單程全票 $100、半票 $50；若錯過，步行約 30 分鐘，或搭阿里山遊園車全票 $70。</p></article>
+          <article class="memo"><h3>Day 1 · 入園與接駁</h3><p>森林遊樂區門票已含。飯店接駁約 10 分鐘，可先買東西吃，再寄放行李。</p></article>
+          <article class="memo"><h3>Day 2 · 祝山日出</h3><p>祝山日出小火車全票 $150、優待票 $75。實際發車時刻於乘車前一日下午 4:30 公告。</p></article>
+          <article class="memo"><h3>Day 2 · 奮起湖吃點心</h3><div class="food-list"><span>百年檜木甜甜圈</span><span>街仔尾阿嬤草仔粿</span><span>一品香野生愛玉</span><span>月台茶香銅鑼燒</span><span>奮起湖大飯店便當</span><span>杉墨日禾</span></div></article>
+          <article class="memo"><h3>Day 3 · 嘉義小吃</h3><div class="food-list"><span>阿溪雞肉飯</span><span>公園老店涼麵</span><span>林聰明砂鍋魚頭</span><span>品安豆漿豆花</span><span>玖零甜食所</span><span>新華美西裝社</span><span>榮興茶行</span></div></article>
+          <article class="memo"><h3>Day 3 · 彈性景點</h3><p>檜意森活村與嘉義市區閒逛後，依時間二選一：番路鄉農會飲冰柿茶集，或 KHTOY 絨毛玩偶旗艦館。</p></article>
+          <article class="memo"><h3>Day 3 · 高鐵回程</h3><p>18:30 前往高鐵嘉義站還車。可選 846 次（18:00 嘉義 → 19:07 新竹）或 850 次（19:00 嘉義 → 20:07 新竹）；請預留還車及進站時間。</p></article>
+          <article class="memo"><h3>票價與時刻</h3><p>以上票價與班次按行程筆記列出，可能因公告調整。出發前再確認高鐵、林鐵、公車與接駁資訊。</p></article>
+        </div>
+      </section>
+
+      <section id="panel-hotel" role="tabpanel" aria-labelledby="tab-hotel" data-panel="hotel" hidden>
+        <div class="section-heading"><div><h2>阿里山閣大飯店</h2><p>入住、接駁與客房資訊，出發前先看一遍。</p></div></div>
+        <dl class="hotel-summary">
+          <div><dt>飯店櫃檯</dt><dd><a href="tel:052679611">05-2679611</a></dd></div>
+          <div><dt>至遊客服務中心／商店區</dt><dd>車程約 7 分鐘 · 步行約 20–25 分鐘</dd></div>
+          <div><dt>接駁車辨識</dt><dd>白色 20 人座中型巴士，車側印有「阿里山閣大飯店」或「阿里山鄉公所」</dd></div>
+        </dl>
+
+        <div class="transport-group">
+          <h3>進房接駁｜遊客中心 → 飯店</h3>
+          <div class="table-wrap"><table>
+            <thead><tr><th>服務時段</th><th>班距</th><th>發車方式</th></tr></thead>
+            <tbody><tr><td>12:30–17:00</td><td>每 30 分鐘</td><td>整點與半點發車；首班 12:30</td></tr></tbody>
+          </table></div>
+          <p class="transport-note">抵達遊客服務中心後，請先致電 <a href="tel:052679611">05-2679611</a> 確認接駁時間；若未見車輛，再電話詢問。</p>
+        </div>
+
+        <div class="transport-group">
+          <h3>晚間用餐／購物接駁｜飯店 ⇄ 商店區</h3>
+          <div class="table-wrap"><table>
+            <thead><tr><th>方向</th><th>發車地點</th><th>班次</th></tr></thead>
+            <tbody>
+              <tr><td>前往商店區</td><td>飯店門口</td><td>18:00、19:00</td></tr>
+              <tr><td>返回飯店</td><td>阿里山旅客服務中心</td><td>18:15、19:15、20:15</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="transport-group">
+          <h3>退房接駁｜飯店 → 遊客中心</h3>
+          <p class="transport-note">請於 11:00 前退房；以下共 8 班：</p>
+          <ol class="departure-times" aria-label="退房接駁發車時間">
+            <li>07:30</li><li>08:00</li><li>08:40</li><li>09:20</li>
+            <li>09:50</li><li>10:30</li><li>11:00</li><li>11:30 末班</li>
+          </ol>
+          <p class="transport-note">07:30 以前沒有園區交通車；若錯過 11:30 末班車，需自費搭遊園車、小火車或步行。</p>
+        </div>
+
+        <div class="transport-group">
+          <h3>搭車與入住提醒</h3>
+          <div class="memo-grid">
+            <article class="memo"><h3>候車方式</h3><p>請提前 5–10 分鐘到指定站點等候。接駁車受路權限制，無法隨叫隨停；若遊客中心正門口沒有停車，請留意前後方。</p></article>
+            <article class="memo"><h3>採買與園區交通</h3><p>飯店附近沒有便利商店，步行至商店街約 20–25 分鐘，建議提早買好必需品。阿里山園區內沒有計程車。</p></article>
+            <article class="memo"><h3>熱水時段</h3><p>熱水供應時間為 17:00–24:00；清晨僅提供溫水，請依供應時段安排盥洗。</p></article>
+            <article class="memo"><h3>晨間鐵道聲響</h3><p>飯店緊鄰沼平車站，是晨間觀日列車與巡邏台車必經處；平交道警示鈴聲無法避免，對聲音敏感者請留意。</p></article>
+            <article class="memo"><h3>客房用電與安全</h3><p>避免同時使用多種高耗電電器，以免跳電。全館客房禁止吸菸、禁止烹煮食物。</p></article>
+            <article class="memo"><h3>夜間安寧</h3><p>晚上 21:00 後請勿喧嘩。</p></article>
+          </div>
+        </div>
+
+        <div class="transport-group">
+          <h3>設施與服務</h3>
+          <div class="memo-grid">
+            <article class="memo"><h3>客房設備</h3><div class="food-list"><span>免費 WiFi</span><span>電視（第四台）</span><span>冰箱</span><span>吹風機</span><span>電熱水壺</span><span>毛巾／浴巾</span><span>洗髮沐浴乳</span></div></article>
+            <article class="memo"><h3>飲水機</h3><p>位於 1F、2F、3F 電梯出口右側角落；提供溫水與熱水，沒有冰水或冰塊。</p></article>
+            <article class="memo"><h3>販賣機</h3><p>A 棟 1F 電梯出口右側，販售泡麵與飲料。</p></article>
+            <article class="memo"><h3>公用微波爐</h3><p>大廳設有 3 台，可供住客使用。</p></article>
+            <article class="memo"><h3>其他服務</h3><p>設有電梯；加購單人棉被每件 $100。</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-packing" role="tabpanel" aria-labelledby="tab-packing" data-panel="packing" hidden>
+        <div class="section-heading">
+          <div><h2>出發前，逐項收進行李</h2><p>依山區早晚溫差、步道與三天行程整理；勾選狀態會保存在這台裝置。</p></div>
+          <div class="todo-summary"><span id="packing-count">0 / 0 已完成</span><span class="progress-track" aria-hidden="true"><span class="progress-fill" id="packing-progress"></span></span></div>
+        </div>
+        <div class="packing-grid" id="packing-groups"></div>
+      </section>
+    </main>
+    <footer>ALISHAN · NATURE · TRAIN · TRAVEL</footer>
+  </div>
+
+  <script>
+    const days = [
+      {
+        date: "2026/11/22（日）",
+        route: "高鐵南下 → 二延平茶園 → 阿里山閣 → 巨木步道＋神木小火車",
+        events: [
+          ["07:30", "搭乘高鐵 0805 次", "2 號出口旁摩斯漢堡集合\n桃園 07:34 → 新竹 07:47 → 嘉義 08:55", "高鐵"],
+          ["09:30", "阿里山郵輪式接駁專車", "高鐵站發車；行程含森林遊樂區門票", "接駁"],
+          ["10:40", "二延平步道觀景台", "", "散步"],
+          ["12:50", "阿里山森林遊樂區", "入園門票已含", "園區"],
+          ["13:00", "飯店接駁、入住寄放行李", "接駁約 10 分鐘；可先買東西吃", "接駁"],
+          ["14:00", "步道健行", "飯店 → 姊妹潭 → 香林服務區（商圈有小吃）→ 巨木群棧道", "步道"],
+          ["16:00", "神木車站 → 阿里山車站", "16:10 末班車；全票 $100、半票 $50。錯過步行約 30 分鐘，或搭遊園車全票 $70", "林鐵"],
+          ["17:00", "商店街晚餐", "", "用餐"],
+          ["19:15", "飯店晚間回程接駁車", "班次：18:15 / 19:15 / 20:15", "接駁"],
+          ["19:30", "入住阿里山閣大飯店", "", "住宿"]
+        ]
+      },
+      {
+        date: "2026/11/23（一）",
+        route: "小笠原日出 → 奮起湖老街便當 → 觀止下午茶 → 和牛燒肉",
+        events: [
+          ["05:00", "沼平車站 → 祝山站", "日出小火車；時刻前一日下午公告", "林鐵"],
+          ["05:30", "步行 10 分鐘 → 小笠原山", "", "步道"],
+          ["07:30", "早餐", "飯店可加購 $300", "用餐"],
+          ["08:30", "退房", "", "住宿"],
+          ["08:40", "飯店接駁 → 阿里山旅客服務中心", "班次：08:00 / 08:40 / 09:20", "接駁"],
+          ["09:10", "搭公車 7322A → 奮起湖", "預計 10:00 抵達；嘉義火車站 11:55", "公車"],
+          ["10:00", "奮起湖老街、午餐", "點心：百年檜木甜甜圈、街仔尾阿嬤草仔粿、一品香野生愛玉、月台茶香銅鑼燒\n午餐：奮起湖大飯店便當　·　下午茶：杉墨日禾", "用餐"],
+          ["14:20", "搭阿里山號 → 嘉義市區", "林鐵班次、奮起湖上車時間請見交通班次分頁並以官方公告為準", "林鐵"],
+          ["17:00", "嘉義火車站 → 觀止飯店", "搭乘飯店接駁", "接駁"],
+          ["17:30", "入住嘉義觀止飯店、享用下午茶", "", "住宿"],
+          ["19:30", "燒肉觀止晚餐", "已預訂", "用餐"],
+          ["22:00", "夜宿嘉義觀止飯店", "", "住宿"]
+        ]
+      },
+      {
+        date: "2026/11/24（二）",
+        route: "租車自駕 → 檜意森活村 → 嘉義小吃 → 高鐵返程",
+        events: [
+          ["08:30", "飯店早餐、退房", "", "住宿"],
+          ["上午", "榮興茶行", "飲料", "用餐"],
+          ["10:00", "檜意森活村、嘉義市區閒逛", "租車自駕", "散步"],
+          ["彈性", "嘉義小吃與甜點", "阿溪雞肉飯、公園老店涼麵、林聰明砂鍋魚頭\n品安豆漿豆花、玖零甜食所、新華美西裝社", "用餐"],
+          ["待選", "彈性景點（二選一）", "番路鄉農會飲冰柿茶集 / KHTOY 絨毛玩偶旗艦館", "景點"],
+          ["18:30", "前往高鐵嘉義站還車", "846 次：嘉義 18:00 → 新竹 19:07\n850 次：嘉義 19:00 → 新竹 20:07", "高鐵"]
+        ]
+      }
+    ];
+
+    const bookings = [
+      { id: "hotel-alishan", name: "阿里山閣大飯店", meta: "11/22 入住 · 官網 · 已付訂金 30%", done: true },
+      { id: "hotel-chiayi", name: "嘉義觀止", meta: "11/23 入住 · 官網 · 已付全額", done: true },
+      { id: "dinner", name: "燒肉觀止", meta: "11/23 19:30 · inline", done: true },
+      { id: "shuttle", name: "觀止飯店接駁", meta: "入住日前 3–7 日預約 · 台鐵 $300 / 高鐵 $600", done: false },
+      { id: "lion-tour", name: "阿里山郵輪式接駁專車", meta: "11/22 · $550 含園區門票 · 09:30 高鐵站發車", done: true, url: "https://activity.liontravel.com/detail/G23007ML-%E5%98%89%E7%BE%A9-%E9%98%BF%E9%87%8C%E5%B1%B1%E9%83%B5%E8%BC%AA%E5%BC%8F%E6%8E%A5%E9%A7%81%E5%B7%B4%E5%A3%AB-%E5%8E%BB%E7%A8%8B--%E9%80%81%E9%98%BF%E9%87%8C%E5%B1%B1%E6%A3%AE%E6%9E%97%E9%81%8A%E6%A8%82%E5%8D%80%E9%96%80%E7%A5%A8?Foreign=0" },
+      { id: "thsr-out", name: "去程高鐵 805", meta: "11/22 · 新竹 → 嘉義 · 桃園 07:34 / 新竹 07:47 / 嘉義 08:55", done: true },
+      { id: "thsr-return", name: "回程高鐵 846 / 850", meta: "11/24 · 嘉義 → 新竹", done: true },
+      { id: "forest-line", name: "林鐵本線小火車", meta: "11/23 · 11/09 開放預訂 · 全段 $600 / 奮起湖區間 $384", done: false, url: "https://afrts.forest.gov.tw/TP01_1.aspx" },
+      { id: "sunrise", name: "祝山日出小火車", meta: "11/23 · 11/09 開放預訂 · 全票 $150 / 優待票 $75", done: false, url: "https://afrts.forest.gov.tw/TP01_1.aspx" },
+      { id: "car", name: "嘉義市區租車", meta: "Day 3 自駕 · 預訂資訊待確認", done: false }
+    ];
+
+    const packingGroups = [
+      { title: "證件與電子用品", items: [
+        ["身分證與健保卡", "搭車、入住與臨時就醫使用"],
+        ["高鐵票與訂房資料", "確認訂位資訊已能離線查看"],
+        ["手機、充電器與行動電源", "山區拍照、導航與聯絡"],
+        ["少量現金與支付卡", "備用於園區交通、商店與小額消費"]
+      ] },
+      { title: "衣物與步行", items: [
+        ["保暖外套與可分層衣物", "清晨觀日及山區夜間保暖"],
+        ["雨衣或輕便雨具", "步道與山區天候變化備用"],
+        ["好走、防滑的步行鞋", "適合姊妹潭與巨木群步道"],
+        ["替換襪子與換洗衣物", "依三天兩夜行程準備"]
+      ] },
+      { title: "隨身與健康", items: [
+        ["個人常備藥與暈車藥", "按個人需求準備"],
+        ["水壺、面紙與濕紙巾", "步行與搭車途中使用"],
+        ["簡易點心", "清晨出發或行程延誤時備用"],
+        ["耳塞（選帶）", "對沼平車站晨間列車或平交道鈴聲敏感者"]
+      ] },
+      { title: "住宿與其他", items: [
+        ["眼罩（選帶）", "清晨日出行程前方便休息"],
+        ["防曬用品", "步道與戶外景點使用"],
+        ["小型背包", "白天健行裝水與隨身物品"],
+        ["盥洗用品（依需要）", "飯店提供毛巾、浴巾及洗髮沐浴乳"]
+      ] }
+    ];
+
+    const dayContent = document.querySelector("#day-content");
+    const searchInput = document.querySelector("#schedule-search");
+    let activeDay = 0;
+
+    function renderDay() {
+      const day = days[activeDay];
+      const query = searchInput.value.trim().toLocaleLowerCase();
+      const visibleEvents = day.events.filter((event) => event.join(" ").toLocaleLowerCase().includes(query));
+      dayContent.innerHTML = `
+        <header class="day-intro"><h3>${day.date}</h3><p>${day.route}</p></header>
+        <ol class="timeline">${visibleEvents.map(([time, title, detail, kind]) => `
+          <li class="event"><time class="event-time">${time}</time><div class="event-body"><p class="event-title">${title}<span class="event-kind">${kind}</span></p>${detail ? `<p class="event-detail">${detail}</p>` : ""}</div></li>
+        `).join("") || '<li class="event"><p class="event-detail">沒有符合的行程，試試其他關鍵字。</p></li>'}</ol>
+        ${activeDay === 0 ? '<p class="notice">留意 16:10 神木線末班車，健行路線請預留回程時間。</p>' : ""}
+        ${activeDay === 2 ? '<p class="notice">租車與待選景點尚未確認；回程列車時間請搭配還車及前往高鐵站的時間安排。</p>' : ""}
+      `;
+    }
+
+    function renderTodos() {
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem("alishan-trip-todos") || "{}"); } catch { saved = {}; }
+      const list = document.querySelector("#todo-list");
+      list.innerHTML = bookings.map((item) => {
+        const done = Object.hasOwn(saved, item.id) ? saved[item.id] : item.done;
+        return `<li class="todo-item${done ? " is-done" : ""}"><input class="todo-check" type="checkbox" id="todo-${item.id}" data-todo="${item.id}" ${done ? "checked" : ""}><div><label class="todo-name" for="todo-${item.id}">${item.name}</label><p class="todo-meta">${item.meta}${item.url ? ` · <a href="${item.url}" target="_blank" rel="noreferrer">官方資訊 ↗</a>` : ""}</p></div><span class="todo-status">${done ? "已完成" : "待處理"}</span></li>`;
+      }).join("");
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const checks = [...document.querySelectorAll("[data-todo]")];
+      const completed = checks.filter((check) => check.checked).length;
+      document.querySelector("#todo-count").textContent = `${completed} / ${checks.length} 已完成`;
+      document.querySelector("#todo-progress").style.width = `${checks.length ? completed / checks.length * 100 : 0}%`;
+      checks.forEach((check) => {
+        const item = check.closest(".todo-item");
+        item.classList.toggle("is-done", check.checked);
+        item.querySelector(".todo-status").textContent = check.checked ? "已完成" : "待處理";
+      });
+    }
+
+    function renderPackingList() {
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem("alishan-packing-list") || "{}"); } catch { saved = {}; }
+      document.querySelector("#packing-groups").innerHTML = packingGroups.map((group, groupIndex) => `
+        <section class="packing-group"><h3>${group.title}</h3><ul class="packing-list">${group.items.map(([name, detail], itemIndex) => {
+          const id = `pack-${groupIndex}-${itemIndex}`;
+          return `<li><label class="packing-item"><input type="checkbox" data-pack="${id}" ${saved[id] ? "checked" : ""}><span class="packing-copy"><strong>${name}</strong><small>${detail}</small></span></label></li>`;
+        }).join("")}</ul></section>
+      `).join("");
+      updatePackingProgress();
+    }
+
+    function updatePackingProgress() {
+      const checks = [...document.querySelectorAll("[data-pack]")];
+      const completed = checks.filter((check) => check.checked).length;
+      document.querySelector("#packing-count").textContent = `${completed} / ${checks.length} 已完成`;
+      document.querySelector("#packing-progress").style.width = `${checks.length ? completed / checks.length * 100 : 0}%`;
+    }
+
+    const layoutButtons = [...document.querySelectorAll("[data-layout-choice]")];
+    function setLayoutMode(mode) {
+      document.body.dataset.layoutMode = mode;
+      layoutButtons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.layoutChoice === mode)));
+      try { localStorage.setItem("alishan-layout-mode", mode); } catch { /* Storage may be disabled in private browsing. */ }
+    }
+
+    let savedLayout = "";
+    try { savedLayout = localStorage.getItem("alishan-layout-mode") || ""; } catch { savedLayout = ""; }
+    setLayoutMode(savedLayout === "mobile" || savedLayout === "desktop" ? savedLayout : (window.matchMedia("(max-width: 720px)").matches ? "mobile" : "desktop"));
+    layoutButtons.forEach((button) => button.addEventListener("click", () => setLayoutMode(button.dataset.layoutChoice)));
+
+    const textSizeToggle = document.querySelector("#text-size-toggle");
+    function setTextSize(isLarge) {
+      document.body.dataset.textSize = isLarge ? "large" : "normal";
+      textSizeToggle.setAttribute("aria-pressed", String(isLarge));
+      try { localStorage.setItem("alishan-text-size", isLarge ? "large" : "normal"); } catch { /* Storage may be disabled in private browsing. */ }
+    }
+
+    let savedTextSize = "normal";
+    try { savedTextSize = localStorage.getItem("alishan-text-size") || "normal"; } catch { savedTextSize = "normal"; }
+    setTextSize(savedTextSize === "large");
+    textSizeToggle.addEventListener("click", () => setTextSize(document.body.dataset.textSize !== "large"));
+
+    document.querySelectorAll("[data-view]").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("[data-view]").forEach((tab) => tab.setAttribute("aria-selected", String(tab === button)));
+        document.querySelectorAll("[data-panel]").forEach((panel) => { panel.hidden = panel.dataset.panel !== button.dataset.view; });
+      });
+    });
+
+    document.querySelectorAll("[data-day]").forEach((button) => {
+      button.addEventListener("click", () => {
+        activeDay = Number(button.dataset.day);
+        document.querySelectorAll("[data-day]").forEach((tab) => tab.setAttribute("aria-selected", String(tab === button)));
+        renderDay();
+      });
+    });
+
+    searchInput.addEventListener("input", renderDay);
+    document.querySelector("#todo-list").addEventListener("change", (event) => {
+      if (!event.target.matches("[data-todo]")) return;
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem("alishan-trip-todos") || "{}"); } catch { saved = {}; }
+      saved[event.target.dataset.todo] = event.target.checked;
+      try { localStorage.setItem("alishan-trip-todos", JSON.stringify(saved)); } catch { /* Storage may be disabled in private browsing. */ }
+      updateProgress();
+    });
+
+    document.querySelector("#packing-groups").addEventListener("change", (event) => {
+      if (!event.target.matches("[data-pack]")) return;
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem("alishan-packing-list") || "{}"); } catch { saved = {}; }
+      saved[event.target.dataset.pack] = event.target.checked;
+      try { localStorage.setItem("alishan-packing-list", JSON.stringify(saved)); } catch { /* Storage may be disabled in private browsing. */ }
+      updatePackingProgress();
+    });
+
+    renderDay();
+    renderTodos();
+    renderPackingList();
+  </script>
+</body>
+</html>
