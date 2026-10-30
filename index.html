@@ -4,6 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="2026 阿里山與嘉義三天兩夜行程、預訂待辦與交通班次查詢。">
+  <meta name="theme-color" content="#315d4d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="阿里山慢旅">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
   <title>阿里山慢旅｜三天兩夜行程</title>
   <style>
     :root {
@@ -57,10 +64,10 @@
     .navigation-inner { display: flex; align-items: center; gap: 12px; }
     .navigation-inner .main-tabs { flex: 1; min-width: 0; }
     .display-controls { display: flex; flex: 0 0 auto; align-items: center; gap: 8px; }
-    .layout-switch { display: flex; flex: 0 0 auto; padding: 3px; border: 1px solid var(--line); background: var(--paper-light); }
+    .layout-switch { display: flex; flex: 0 0 auto; gap: 2px; padding: 0; border: 0; background: transparent; }
     .layout-button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; padding: 5px 9px; border: 0; background: transparent; color: var(--muted); cursor: pointer; font: 700 11px/1 "Segoe UI", sans-serif; }
     .layout-button svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-    .layout-button[aria-pressed="true"] { background: var(--forest); color: var(--paper-light); }
+    .layout-button[aria-pressed="true"] { background: var(--forest-light); color: var(--forest); }
     .text-size-controls { display: flex; flex: 0 0 auto; align-items: center; gap: 4px; padding: 0; border: 0; background: transparent; }
     .font-step-button { min-width: 42px; min-height: 42px; padding: 5px 8px; border: 0; background: transparent; font-size: 19px; }
     .font-step-button:not(:disabled):hover { background: var(--forest-light); color: var(--forest); }
@@ -75,8 +82,34 @@
     .day-button[aria-selected="true"] { border-color: var(--forest); color: var(--forest); }
     .day-intro { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 14px; }
     .day-intro h3 { margin: 0; font-size: 19px; }
+    .day-intro { padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+    .day-intro h3 { padding-left: 12px; border-left: 3px solid var(--rust); }
     .day-intro p { margin: 0; color: var(--muted); font-size: 12px; }
     .schedule-tools { display: flex; align-items: center; gap: 10px; }
+    .mountain-weather { margin: 20px 0; padding: 12px 0; border-block: 1px solid var(--line); }
+    .mountain-weather summary { color: var(--forest); font-weight: 700; cursor: pointer; }
+    .weather-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 6px 0; }
+    .weather-status { margin: 0; color: var(--muted); font-size: 12px; }
+    .weather-refresh { display: grid; place-items: center; flex: 0 0 36px; width: 36px; height: 36px; padding: 0; border: 0; background: transparent; color: var(--forest); cursor: pointer; }
+    .weather-refresh:disabled { opacity: .6; cursor: wait; }
+    .weather-readings { display: grid; gap: 0; margin: 0; }
+    .weather-readings > div { display: grid; grid-template-columns: minmax(76px, 1fr) repeat(2, minmax(0, 1fr)); align-items: center; gap: 8px; min-width: 0; padding: 9px 0; border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+    .weather-readings dt { color: var(--forest); font-size: 14px; font-weight: 700; }
+    .weather-readings dd { display: flex; align-items: center; gap: 6px; min-width: 0; margin: 0; font-size: 14px; }
+    .weather-value { font: 700 16px/1.5 "Segoe UI", sans-serif; color: var(--ink); }
+    .weather-icon { flex: 0 0 auto; width: 16px; height: 16px; fill: none; stroke: var(--rust); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .weather-footer { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; margin-top: 8px; color: var(--muted); font-size: 12px; }
+    .weather-explanation { flex: 1 1 100%; }
+    .weather-explanation summary { color: var(--muted); font-size: inherit; font-weight: 400; }
+    .weather-note { margin: 12px 0 0; font-size: 12px; color: var(--muted); }
+    body[data-text-size="large"] .weather-status,
+    body[data-text-size="large"] .weather-note { font-size: 15px; }
+    body[data-text-size="large"] .weather-readings dd { font-size: 16px; }
+    body[data-text-size="large"] .weather-readings dt { font-size: 18px; }
+    body[data-text-size="larger"] .weather-status,
+    body[data-text-size="larger"] .weather-note { font-size: 17px; }
+    body[data-text-size="larger"] .weather-readings dd { font-size: 18px; }
+    body[data-text-size="larger"] .weather-readings dt { font-size: 20px; }
     .search { width: min(250px, 42vw); min-height: 39px; padding: 7px 11px; border: 1px solid var(--line); border-radius: 3px; background: var(--paper-light); color: var(--ink); font-size: 13px; }
     .timeline { --axis-x: 80px; position: relative; margin: 0; padding: 2px 0 2px 0; list-style: none; }
     .timeline::before { content: ""; position: absolute; top: 14px; bottom: 14px; left: var(--axis-x); width: 1px; transform: translateX(-50%); background: var(--line); }
@@ -84,9 +117,13 @@
     .event::before { content: ""; position: absolute; box-sizing: border-box; top: calc(14px + var(--time-font-size) * .8); left: var(--axis-x); width: 13px; height: 13px; transform: translate(-50%, -50%); border: 2px solid var(--paper); border-radius: 50%; background: var(--rust); box-shadow: 0 0 0 1px var(--rust); }
     .event-time { align-self: start; padding-top: 1px; color: var(--forest); font: 700 var(--time-font-size)/1.6 "Segoe UI", sans-serif; text-align: right; white-space: nowrap; }
     .event-body { min-width: 0; }
-    .event-title { margin: 0; font-size: 15px; font-weight: 700; line-height: 1.5; }
-    .event-detail { margin: 3px 0 0; color: var(--muted); font-size: 12px; line-height: 1.65; white-space: pre-line; }
-    .event-kind { display: inline-block; margin-left: 8px; color: var(--rust); font: 700 9px "Segoe UI", sans-serif; letter-spacing: .08em; vertical-align: 2px; }
+    .event-title { display: grid; grid-template-columns: 22px minmax(0, 1fr); align-items: start; gap: 8px; margin: 0; font-size: 15px; font-weight: 700; line-height: 1.5; }
+    .event-detail { margin: 3px 0 0; padding-left: 30px; color: var(--muted); font-size: 12px; line-height: 1.65; white-space: pre-line; }
+    .event-kind { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 1.5em; margin: 0; color: var(--rust); }
+    .event-kind svg { display: block; width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .event-kind[data-kind="步道"], .event-kind[data-kind="散步"], .event-kind[data-kind="園區"], .event-kind[data-kind="景點"] { color: var(--forest); }
+    .icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none; }
+    .packing-command svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; vertical-align: -2px; margin-right: 5px; }
     .inline-map { color: inherit; text-decoration-color: var(--rust); text-underline-offset: 3px; }
     .inline-map:hover { color: var(--rust); }
     .notice { margin: 14px 0 0 98px; padding: 11px 14px; border-left: 3px solid var(--gold); background: rgba(179, 138, 72, .11); color: #665a3d; font-size: 12px; }
@@ -150,6 +187,9 @@
     body[data-text-size="larger"] .packing-command:not(.packing-delete) { font-size: 20px; }
     .source-note { margin-top: 34px; padding-top: 13px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
     footer { padding: 16px 0 26px; border-top: 1px solid var(--line); color: var(--forest); font: 700 10px "Segoe UI", sans-serif; letter-spacing: .16em; text-align: center; }
+    .app-status { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding: 14px 0; color: var(--muted); font-size: 12px; }
+    .app-status button { min-height: 40px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 3px; background: var(--paper-light); color: var(--forest); cursor: pointer; }
+    .app-status button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
     @media (max-width: 720px) {
       .page { width: min(100% - 30px, 560px); }
       .hero { grid-template-columns: 1fr; gap: 8px; padding: 28px 0 24px; }
@@ -218,7 +258,7 @@
     body[data-text-size="large"] .event { --time-font-size: 17px; }
     body[data-text-size="large"] .event-title { font-size: 19px; }
     body[data-text-size="large"] .event-detail { font-size: 15px; }
-    body[data-text-size="large"] .event-kind { font-size: 12px; }
+    body[data-text-size="large"] .event-kind svg { width: 20px; height: 20px; }
     body[data-text-size="large"] .notice { font-size: 15px; }
     body[data-text-size="large"] .todo-summary { font-size: 14px; }
     body[data-text-size="large"] .todo-name { font-size: 18px; }
@@ -250,7 +290,7 @@
     body[data-text-size="larger"] .event { --time-font-size: 19px; }
     body[data-text-size="larger"] .event-title { font-size: 21px; }
     body[data-text-size="larger"] .event-detail { font-size: 17px; }
-    body[data-text-size="larger"] .event-kind { font-size: 14px; }
+    body[data-text-size="larger"] .event-kind svg { width: 22px; height: 22px; }
     body[data-text-size="larger"] .notice { font-size: 17px; }
     body[data-text-size="larger"] .todo-summary { font-size: 16px; }
     body[data-text-size="larger"] .todo-name { font-size: 20px; }
@@ -286,6 +326,26 @@
   </style>
 </head>
 <body>
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <metadata>Lucide icons, ISC License. Copyright (c) 2022, Lucide Contributors.
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+https://lucide.dev/license</metadata>
+    <defs>
+      <symbol id="icon-train" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="16" rx="3"/><path d="M4 11h16M12 3v8m-4 8-2 3m10-3 2 3"/><path d="M8 15h.01M16 15h.01"/></symbol>
+      <symbol id="icon-bus" viewBox="0 0 24 24"><path d="M8 6v6m8-6v6M2 12h2m16 0h2M7 18v2m10-2v2"/><rect x="4" y="3" width="16" height="15" rx="2"/><path d="M4 12h16M7 15h.01M17 15h.01"/></symbol>
+      <symbol id="icon-walk" viewBox="0 0 24 24"><path d="M4 16v-2.38C4 11.5 5 10 7 10s3 1.5 3 3.62V16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm10-8V5.62C14 3.5 15 2 17 2s3 1.5 3 3.62V8a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1Z"/><path d="M4 20a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-1H4Zm10-8a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-1h-6Z"/></symbol>
+      <symbol id="icon-trees" viewBox="0 0 24 24"><path d="m17 14 3-5-3-7-3 7 3 5Zm0 0v8M6 22v-5"/><path d="M6 3a5 5 0 0 0-5 5 5 5 0 0 0 3 4.58A3 3 0 0 0 6 18a3 3 0 0 0 2-5.42A5 5 0 0 0 6 3Z"/></symbol>
+      <symbol id="icon-meal" viewBox="0 0 24 24"><path d="M3 2v7a4 4 0 0 0 8 0V2M7 2v20M21 15V2c-4 3-4 7 0 13Zm0 0v7"/></symbol>
+      <symbol id="icon-hotel" viewBox="0 0 24 24"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4M12 4v6M2 18h20"/></symbol>
+      <symbol id="icon-place" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+      <symbol id="icon-edit" viewBox="0 0 24 24"><path d="m16 3 5 5M4 20l4-1L21 6a2.12 2.12 0 0 0-3-3L5 16l-1 4Z"/></symbol>
+      <symbol id="icon-temperature" viewBox="0 0 24 24"><path d="M14 14.76V3a2 2 0 0 0-4 0v11.76a4 4 0 1 0 4 0Z"/></symbol>
+      <symbol id="icon-rain" viewBox="0 0 24 24"><path d="M4 14.9A7 7 0 1 1 16.25 8H18a4 4 0 0 1 2 7.5M8 16v4m4-2v4m4-6v4"/></symbol>
+      <symbol id="icon-sunrise" viewBox="0 0 24 24"><path d="M12 2v2m-7 3 1.5 1.5M2 14h2m16 0h2m-4.5-5.5L19 7M8 16a4 4 0 1 1 8 0M2 20h20M12 12V8m-2 2 2-2 2 2"/></symbol>
+      <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M3 11a9 9 0 0 1 15-6l3 3M21 3v5h-5m5 5a9 9 0 0 1-15 6l-3-3m0 5v-5h5"/></symbol>
+    </defs>
+  </svg>
   <div class="page">
     <header class="hero">
       <div class="hero-copy">
@@ -306,6 +366,7 @@
             <circle cx="9" cy="10" r=".65" fill="#263d36" opacity=".18" />
           </pattern>
         </defs>
+        <g data-hero-day="0">
         <circle cx="344" cy="62" r="24" fill="#d5a35b" opacity=".9" />
         <path d="M8 172 82 75l36 42 57-79 74 105 53-75 109 112Z" fill="#91aaa0" />
         <path d="m61 103 21-28 17 20-12-5-9 10-7-5Zm91-32 23-33 24 37-18-10-10 11-8-8Zm124 15 26-35 33 52-20-13-13 12-9-10Z" fill="#f3edda" />
@@ -336,6 +397,46 @@
             <circle cx="158" cy="207" r="8" /><circle cx="207" cy="207" r="8" />
             <circle cx="246" cy="207" r="9" /><circle cx="319" cy="207" r="11" />
           </g>
+        </g>
+        </g>
+        <g data-hero-day="1" hidden>
+          <circle cx="285" cy="88" r="43" fill="#d5a35b" />
+          <g stroke="#b38a48" stroke-width="2" opacity=".6"><path d="M285 28V17m-43 27-9-9m95 9 9-9m-111 53h-13m144 0h13M262 26l-4-9m50 9 4-9"/></g>
+          <path d="m8 167 78-62 50 30 55-68 61 71 59-38 101 68v48H8Z" fill="#91aaa0" />
+          <path d="m165 101 26-34 28 33-24-11-10 14-9-7Z" fill="#f3edda" />
+          <path d="m0 195 73-55 54 37 69-49 67 42 74-31 83 48v45H0Z" fill="#557a69" />
+          <path d="M91 181c47-21 87-15 127-5 41-15 91-16 161-2-96 18-189 23-288 7Z" fill="#f3edda" opacity=".9" />
+          <path d="M137 211c43-18 92-10 120-7 54-17 90-14 145-4-94 22-166 26-265 11Z" fill="#d9e1cf" />
+          <path d="M0 222c62-39 109-21 173-5l71 29H0Z" fill="#315d4d" />
+          <g fill="#24493d"><path d="m8 202 20-70 22 70H35v39H22v-39Zm38 12 27-96 29 96H82v31H67v-31Zm62 14 16-52 18 52h-12v20h-10v-20Z"/></g>
+          <path d="m145 222 80-21 64 18-78 24Z" fill="#d7c89e" />
+          <path d="m145 222 66 21v7l-66-21Zm66 21 78-24v7l-78 24Z" fill="#8a7959" />
+          <path d="m153 222 72-18 56 15m-128 3v-22m72 4v-22m56 37v-22m-128 3 72-18 56 15" fill="none" stroke="#a64e35" stroke-width="3" />
+          <path d="M194 204v-16a5 5 0 0 1 10 0v16m-7 0-2 13m7-13 3 10" fill="none" stroke="#263d36" stroke-width="3" />
+          <circle cx="199" cy="178" r="4" fill="#263d36" />
+        </g>
+        <g data-hero-day="2" hidden>
+          <circle cx="322" cy="65" r="25" fill="#d5a35b" />
+          <path d="m20 168 65-53 53 24 68-46 76 52 49-27 70 53v45H20Z" fill="#91aaa0" />
+          <path d="M9 233c91-40 154-27 217-20s125-17 185 19v22H9Z" fill="#557a69" />
+          <path d="M55 246c58-41 117-37 159-30s96 9 151-3" fill="none" stroke="#d7c89e" stroke-width="16" />
+          <g>
+            <path d="M113 151h181v62H113Z" fill="#d7c89e" />
+            <path d="m98 153 38-42h139l35 42Z" fill="#a64e35" />
+            <path d="M108 147h192m-155-27h120" stroke="#263d36" stroke-width="3" />
+            <path d="M130 168h31v29h-31zm45 0h31v29h-31zm45 0h24v45h-24zm38 0h23v29h-23Z" fill="#315d4d" />
+            <path d="M144 168v29m46-29v29m79-29v29M113 205h181" stroke="#8a7959" stroke-width="3" />
+            <path d="M108 213h192v6H108Z" fill="#8a7959" />
+          </g>
+          <g fill="#315d4d">
+            <path d="M52 144h7v93h-7Zm295-13h8v105h-8Z" />
+            <circle cx="54" cy="117" r="30"/><circle cx="33" cy="140" r="24"/><circle cx="74" cy="139" r="24"/>
+            <circle cx="351" cy="100" r="35"/><circle cx="325" cy="128" r="27"/><circle cx="377" cy="127" r="27"/>
+          </g>
+          <g fill="#557a69"><circle cx="43" cy="109" r="18"/><circle cx="339" cy="87" r="20"/></g>
+          <g fill="none" stroke="#263d36" stroke-width="3"><circle cx="83" cy="228" r="13"/><circle cx="119" cy="228" r="13"/><path d="m83 228 14-22 22 22H83l8-29h12m-5 7h15m-4-8h8m-4 0 6 30"/></g>
+          <path d="M170 241h53m-47-8h42m-37 0v15m31-15v15" fill="none" stroke="#8a7959" stroke-width="4" />
+          <g fill="#24493d"><path d="M7 246c13-23 31-23 46 0Zm285 0c18-21 39-21 57 0Zm63 0c13-18 29-18 43 0Z"/></g>
         </g>
         <path d="M0 0h420v280H0z" fill="url(#print-grain)" opacity=".45" />
       </svg>
@@ -374,6 +475,27 @@
           <div><h2>沿著山線慢慢走</h2><p>選擇日期查看當天的時間、移動方式與行程細節。</p></div>
           <div class="schedule-tools"><input class="search" id="schedule-search" type="search" placeholder="搜尋當日行程" aria-label="搜尋當日行程"></div>
         </div>
+        <details class="mountain-weather" id="mountain-weather" open>
+          <summary>天氣與日出</summary>
+          <div class="weather-toolbar">
+            <p class="weather-status" id="weather-status" role="status" aria-live="polite">正在取得今日資料…</p>
+            <button class="weather-refresh" id="weather-refresh" type="button" title="更新天氣" aria-label="更新天氣"><svg class="weather-icon" aria-hidden="true"><use href="#icon-refresh"/></svg></button>
+          </div>
+          <dl class="weather-readings">
+            <div><dt>阿里山</dt><dd aria-label="目前估算氣溫" title="目前估算氣溫"><svg class="weather-icon" aria-hidden="true"><use href="#icon-temperature"/></svg><span class="weather-value" id="weather-alishan-temperature">—</span></dd><dd aria-label="今日最高降雨機率" title="今日最高降雨機率"><svg class="weather-icon" aria-hidden="true"><use href="#icon-rain"/></svg><span id="weather-alishan-rain">—</span></dd></div>
+            <div><dt>祝山</dt><dd aria-label="目前估算氣溫" title="目前估算氣溫"><svg class="weather-icon" aria-hidden="true"><use href="#icon-temperature"/></svg><span class="weather-value" id="weather-zhushan-temperature">—</span></dd><dd aria-label="今日最高降雨機率" title="今日最高降雨機率"><svg class="weather-icon" aria-hidden="true"><use href="#icon-rain"/></svg><span id="weather-zhushan-rain">—</span></dd></div>
+            <div><dt>嘉義市</dt><dd aria-label="目前估算氣溫" title="目前估算氣溫"><svg class="weather-icon" aria-hidden="true"><use href="#icon-temperature"/></svg><span class="weather-value" id="weather-chiayi-temperature">—</span></dd><dd aria-label="今日最高降雨機率" title="今日最高降雨機率"><svg class="weather-icon" aria-hidden="true"><use href="#icon-rain"/></svg><span id="weather-chiayi-rain">—</span></dd></div>
+            <div><dt>小笠原山</dt><dd title="今日預估日出"><svg class="weather-icon" aria-hidden="true"><use href="#icon-sunrise"/></svg><span id="weather-sunrise-today">今日 —</span></dd><dd title="明日預估日出"><svg class="weather-icon" aria-hidden="true"><use href="#icon-sunrise"/></svg><span id="weather-sunrise-tomorrow">明日 —</span></dd></div>
+          </dl>
+          <div class="weather-footer">
+            <span>模式估算 · 臺灣時間</span><a class="inline-map" href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>
+            <details class="weather-explanation"><summary>資料說明</summary>
+              <p class="weather-note">顯示今天／明天，非所選行程日期。溫度計為目前估算氣溫、雨雲為今日最高降雨機率。各地點座標模式估算非氣象署測站實測，網格與現場可能有落差。日出為區域天文估算，不含山稜遮蔽，實際見日時刻請參考園區公告。</p>
+              <p class="weather-note">阿里山：<span id="weather-alishan-time">—</span> · 祝山：<span id="weather-zhushan-time">—</span> · 嘉義市：<span id="weather-chiayi-time">—</span></p>
+              <p class="weather-note"><a class="inline-map" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> · <a class="inline-map" href="https://www.cwa.gov.tw/" target="_blank" rel="noopener noreferrer">中央氣象署</a></p>
+            </details>
+          </div>
+        </details>
         <div class="day-tabs" role="tablist" aria-label="選擇行程日期">
           <button class="day-button" type="button" role="tab" aria-selected="true" data-day="0">Day 1 · 11/22</button>
           <button class="day-button" type="button" role="tab" aria-selected="false" data-day="1">Day 2 · 11/23</button>
@@ -429,6 +551,7 @@
           <article class="memo"><h3>Day 2 · 奮起湖吃點心</h3><div class="food-list"><span>百年檜木甜甜圈</span><span>街仔尾阿嬤草仔粿</span><span>一品香野生愛玉</span><span>月台茶香銅鑼燒</span><span>奮起湖大飯店便當</span><span>杉墨日禾</span></div></article>
           <article class="memo"><h3>Day 3 · 嘉義小吃</h3><div class="food-list"><span>阿溪雞肉飯</span><span>公園老店涼麵</span><span>林聰明砂鍋魚頭</span><span>品安豆漿豆花</span><span>玖零甜食所</span><span>新華美西裝社</span><span>榮興茶行</span></div></article>
           <article class="memo"><h3>Day 3 · 彈性景點</h3><p>檜意森活村與嘉義市區閒逛後，依時間二選一：番路鄉農會飲冰柿茶集，或 KHTOY 絨毛玩偶旗艦館。</p></article>
+          <article class="memo"><h3>共同支出 · 分帳記事</h3><p><a class="inline-map" href="https://liff.line.me/1655320992-Y8GowEpw/g/pLy7heiucAPSJLMvf2M552" target="_blank" rel="noopener noreferrer">開啟 LINE 分帳記事 ↗</a></p></article>
           <article class="memo"><h3>票價與時刻</h3><p>以上票價與班次按行程筆記列出，可能因公告調整。出發前再確認高鐵、林鐵、公車與接駁資訊。</p></article>
         </div>
       </section>
@@ -501,7 +624,7 @@
           <div class="todo-summary"><span id="packing-count">0 / 0 已完成</span><span class="progress-track" aria-hidden="true"><span class="progress-fill" id="packing-progress"></span></span></div>
         </div>
         <div class="packing-actions">
-          <button class="packing-command" id="packing-edit" type="button">編輯清單</button>
+          <button class="packing-command" id="packing-edit" type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#icon-edit"/></svg>編輯清單</button>
           <button class="packing-command" id="packing-save" type="button" hidden>完成</button>
           <button class="packing-command" id="packing-cancel" type="button" hidden>取消</button>
           <span id="packing-message" role="status" aria-live="polite"></span>
@@ -509,6 +632,11 @@
         <div class="packing-grid" id="packing-groups"></div>
       </section>
     </main>
+    <div class="app-status">
+      <span id="offline-status" role="status" aria-live="polite"></span>
+      <button id="app-install" type="button" hidden>＋ 加入主畫面</button>
+      <button id="app-update" type="button" hidden>更新離線版本</button>
+    </div>
     <footer>ALISHAN · NATURE · TRAIN · TRAVEL</footer>
   </div>
 
@@ -647,26 +775,45 @@
       { title: "證件與電子用品", items: [
         ["身分證與健保卡", "搭車、入住與臨時就醫使用"],
         ["高鐵票與訂房資料", "確認訂位資訊已能離線查看"],
-        ["手機、充電器與行動電源", "山區拍照、導航與聯絡"],
-        ["少量現金與支付卡", "備用於園區交通、商店與小額消費"]
+        ["手機、充電器", "山區拍照、導航與聯絡"],
+        ["少量現金與支付卡", "備用於園區交通、商店與小額消費"],
+        ["耳機", "搭車途中使用"],
+        ["行動電源", "出發前先充飽電"],
+        ["充電線", "確認手機與行動電源適用的接頭"],
+        ["悠遊卡", "出發前記得加值"]
       ] },
       { title: "衣物與步行", items: [
         ["保暖外套與可分層衣物", "清晨觀日及山區夜間保暖"],
-        ["雨衣或輕便雨具", "步道與山區天候變化備用"],
+        ["雨衣", "步道與山區天候變化備用"],
         ["好走、防滑的步行鞋", "適合姊妹潭與巨木群步道"],
-        ["替換襪子與換洗衣物", "依三天兩夜行程準備"]
+        ["換洗衣物", "依三天兩夜行程準備"],
+        ["發熱衣", "清晨觀日與山區保暖"],
+        ["毛衣", "搭配外套分層保暖"],
+        ["褲子", "準備適合步道行走的長褲"],
+        ["內衣褲", "依三天兩夜行程準備"],
+        ["襪子", "準備替換襪，避免潮濕"],
+        ["拖鞋", "住宿時使用"],
+        ["雨傘", "可收納的輕便傘"]
       ] },
       { title: "隨身與健康", items: [
         ["個人常備藥與暈車藥", "按個人需求準備"],
-        ["水壺、面紙與濕紙巾", "步行與搭車途中使用"],
+        ["水壺、濕紙巾", "步行與搭車途中使用"],
         ["簡易點心", "清晨出發或行程延誤時備用"],
-        ["耳塞（選帶）", "對沼平車站晨間列車或平交道鈴聲敏感者"]
+        ["耳塞（選帶）", "對沼平車站晨間列車或平交道鈴聲敏感者"],
+        ["衛生紙／衛生棉", "依個人需求備足"],
+        ["墨鏡", "戶外與觀日後使用"],
+        ["隱形眼鏡", "依需求準備備用鏡片、鏡盒與保養液"],
+        ["眼鏡", "隱形眼鏡之外的備用選擇"]
       ] },
       { title: "住宿與其他", items: [
         ["眼罩（選帶）", "清晨日出行程前方便休息"],
         ["防曬用品", "步道與戶外景點使用"],
         ["小型背包", "白天健行裝水與隨身物品"],
-        ["盥洗用品（依需要）", "飯店提供毛巾、浴巾及洗髮沐浴乳"]
+        ["盥洗用品（依需要）", "飯店提供毛巾、浴巾及洗髮沐浴乳"],
+        ["牙刷", "個人盥洗用品"],
+        ["牙膏", "小容量方便攜帶"],
+        ["購物袋", "採買與收納使用"],
+        ["保養品", "依個人需求分裝，山區留意保濕"]
       ] }
     ];
 
@@ -686,14 +833,29 @@
       }, text);
     }
 
+    function renderEventIcon(kind) {
+      const icons = { "高鐵": "train", "林鐵": "train", "接駁": "bus", "公車": "bus", "散步": "walk", "步道": "walk", "園區": "trees", "用餐": "meal", "住宿": "hotel", "景點": "place" };
+      return `<span class="event-kind" data-kind="${kind}" role="img" aria-label="${kind}" title="${kind}"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-${icons[kind] || "place"}"/></svg></span>`;
+    }
+
     function renderDay() {
       const day = days[activeDay];
+      const artDescriptions = [
+        ["阿里山山線與森林小火車", "復古印刷風格的層疊山巒、杉林與赭紅色森林列車。"],
+        ["小笠原山雲海日出與觀景平台", "金色朝陽照亮開闊雲海，杉林旁的木造觀景平台迎向山巒。"],
+        ["嘉義公園與木造展館", "復古印刷風格的木造展館、綠蔭老樹、自行車與公園長椅。"]
+      ];
+      document.querySelectorAll("[data-hero-day]").forEach(scene => {
+        scene.toggleAttribute("hidden", Number(scene.dataset.heroDay) !== activeDay);
+      });
+      document.querySelector("#alishan-art-title").textContent = artDescriptions[activeDay][0];
+      document.querySelector("#alishan-art-description").textContent = artDescriptions[activeDay][1];
       const query = searchInput.value.trim().toLocaleLowerCase();
       const visibleEvents = day.events.filter((event) => event.join(" ").toLocaleLowerCase().includes(query));
       dayContent.innerHTML = `
         <header class="day-intro"><h3>${day.date}</h3><p>${day.route}</p></header>
         <ol class="timeline">${visibleEvents.map(([time, title, detail, kind]) => `
-          <li class="event"><time class="event-time">${time}</time><div class="event-body"><p class="event-title">${renderInlineMapText(title, title, "title")}<span class="event-kind">${kind}</span></p>${detail ? `<p class="event-detail">${renderInlineMapText(detail, title, "detail")}</p>` : ""}</div></li>
+          <li class="event"><time class="event-time">${time}</time><div class="event-body"><p class="event-title">${renderEventIcon(kind)}<span class="event-heading-text">${renderInlineMapText(title, title, "title")}</span></p>${detail ? `<p class="event-detail">${renderInlineMapText(detail, title, "detail")}</p>` : ""}</div></li>
         `).join("") || '<li class="event"><p class="event-detail">沒有符合的行程，試試其他關鍵字。</p></li>'}</ol>
         ${activeDay === 2 ? '<p class="notice">租車與待選景點尚未確認；回程列車時間請搭配還車及前往高鐵站的時間安排。</p>' : ""}
       `;
@@ -726,9 +888,32 @@
       let checked = {};
       try {
         const saved = JSON.parse(localStorage.getItem("alishan-packing-data") || "null");
-        if (Array.isArray(saved) && saved.length === packingGroups.length && saved.every(group =>
+        const groups = Array.isArray(saved) ? saved : saved?.groups;
+        if (Array.isArray(groups) && groups.length === packingGroups.length && groups.every(group =>
           typeof group.title === "string" && Array.isArray(group.items) && group.items.every(item =>
-            typeof item.id === "string" && typeof item.name === "string" && typeof item.detail === "string" && typeof item.checked === "boolean"))) return saved;
+            typeof item.id === "string" && typeof item.name === "string" && typeof item.detail === "string" && typeof item.checked === "boolean"))) {
+          if (saved?.version === 2) return groups;
+          const previousNames = {
+            "pack-0-2": "手機、充電器與行動電源",
+            "pack-1-1": "雨衣或輕便雨具",
+            "pack-1-3": "替換襪子與換洗衣物",
+            "pack-2-1": "水壺、面紙與濕紙巾"
+          };
+          const items = groups.flatMap(group => group.items);
+          packingGroups.forEach((group, groupIndex) => {
+            group.items.forEach(([name, detail], itemIndex) => {
+              const id = `pack-${groupIndex}-${itemIndex}`;
+              const existing = items.find(item => item.id === id);
+              if (existing && existing.name === previousNames[id]) existing.name = name;
+              if (itemIndex >= 4 && !existing && !items.some(item => item.name.trim() === name)) {
+                const addition = { id, name, detail, checked: false };
+                groups[groupIndex].items.push(addition);
+                items.push(addition);
+              }
+            });
+          });
+          return groups;
+        }
         checked = JSON.parse(localStorage.getItem("alishan-packing-list") || "{}");
       } catch { checked = {}; }
       return packingGroups.map((group, groupIndex) => ({
@@ -747,7 +932,7 @@
 
     function persistPacking(data) {
       try {
-        localStorage.setItem("alishan-packing-data", JSON.stringify(data));
+        localStorage.setItem("alishan-packing-data", JSON.stringify({ version: 2, groups: data }));
         packingMessage.textContent = "";
         return true;
       } catch {
@@ -942,8 +1127,121 @@
       updatePackingProgress();
     });
 
+    const weatherRefresh = document.querySelector("#weather-refresh");
+    const weatherStatus = document.querySelector("#weather-status");
+    const weatherFields = ["weather-alishan-temperature", "weather-alishan-rain", "weather-alishan-time", "weather-zhushan-temperature", "weather-zhushan-rain", "weather-zhushan-time", "weather-chiayi-temperature", "weather-chiayi-rain", "weather-chiayi-time", "weather-sunrise-today", "weather-sunrise-tomorrow"];
+
+    async function updateMountainWeather() {
+      if (weatherRefresh.disabled) return;
+      if (!navigator.onLine) {
+        weatherFields.forEach(id => { document.getElementById(id).textContent = "—"; });
+        weatherStatus.textContent = "目前離線，天氣與日出資料需連網更新。";
+        return;
+      }
+      weatherRefresh.disabled = true;
+      weatherStatus.textContent = "正在取得今日資料…";
+      weatherFields.forEach(id => { document.getElementById(id).textContent = "—"; });
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 12000);
+      try {
+        const parameters = new URLSearchParams({
+          latitude: "23.5109539,23.510354,23.506129,23.479", longitude: "120.8034992,120.8231009,120.823798,120.449",
+          elevation: "2216,2451,2488,30", current: "temperature_2m",
+          daily: "sunrise,precipitation_probability_max", timezone: "Asia/Taipei", forecast_days: "2"
+        });
+        const response = await fetch(`https://api.open-meteo.com/v1/forecast?${parameters}`, { signal: controller.signal, cache: "no-store" });
+        if (!response.ok) throw new Error("Weather service unavailable");
+        const data = await response.json();
+        const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Taipei", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+        if (!Array.isArray(data) || data.length !== 4 || data.some(site => site.timezone !== "Asia/Taipei" || site.daily?.time?.[0] !== today)) throw new Error("Outdated weather data");
+        const number = value => typeof value === "number" && Number.isFinite(value);
+        const temperature = value => number(value) ? `${value.toFixed(1)} °C` : "無資料";
+        [["alishan", 0], ["zhushan", 1], ["chiayi", 3]].forEach(([name, index]) => {
+          const site = data[index];
+          document.getElementById(`weather-${name}-temperature`).textContent = temperature(site.current?.temperature_2m);
+          const rain = site.daily.precipitation_probability_max?.[0];
+          document.getElementById(`weather-${name}-rain`).textContent = number(rain) && rain >= 0 && rain <= 100 ? `${rain}%` : "無資料";
+          const time = site.current?.time;
+          document.getElementById(`weather-${name}-time`).textContent = typeof time === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(time) ? `模式時間 ${time.replace("T", " ")}` : "模式時間未提供";
+        });
+        const sunrise = data[2].daily.sunrise;
+        const sunriseLabel = (index, label) => {
+          const time = sunrise?.[index];
+          return typeof time === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(time) ? `${label} ${time.slice(11)}` : `${label} 無資料`;
+        };
+        document.querySelector("#weather-sunrise-today").textContent = sunriseLabel(0, "今日");
+        document.querySelector("#weather-sunrise-tomorrow").textContent = sunriseLabel(1, "明日");
+        const updated = new Intl.DateTimeFormat("zh-TW", { timeZone: "Asia/Taipei", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date());
+        weatherStatus.textContent = `${today} · 更新 ${updated}`;
+      } catch {
+        weatherFields.forEach(id => { document.getElementById(id).textContent = "—"; });
+        weatherStatus.textContent = "暫時無法取得天氣，請稍後重試或查看中央氣象署。";
+      } finally {
+        clearTimeout(timeout);
+        weatherRefresh.disabled = false;
+      }
+    }
+
+    weatherRefresh.addEventListener("click", updateMountainWeather);
+
+    let offlineReady = false;
+    let installPrompt = null;
+    const offlineStatus = document.querySelector("#offline-status");
+    const installButton = document.querySelector("#app-install");
+    const updateButton = document.querySelector("#app-update");
+
+    function renderOfflineStatus() {
+      offlineStatus.textContent = offlineReady
+        ? (navigator.onLine ? "行程與清單已可離線查看" : "離線模式 · 地圖、分帳與天氣需連網")
+        : (navigator.onLine ? "正在準備離線資料…" : "尚未完成離線快取，請連網後再試。");
+    }
+
+    window.addEventListener("beforeinstallprompt", event => {
+      event.preventDefault();
+      installPrompt = event;
+      installButton.hidden = false;
+    });
+    installButton.addEventListener("click", async () => {
+      if (!installPrompt) return;
+      const prompt = installPrompt;
+      installPrompt = null;
+      installButton.hidden = true;
+      await prompt.prompt();
+      await prompt.userChoice;
+    });
+    window.addEventListener("appinstalled", () => {
+      installPrompt = null;
+      installButton.hidden = true;
+    });
+    window.addEventListener("online", () => { renderOfflineStatus(); updateMountainWeather(); });
+    window.addEventListener("offline", () => { renderOfflineStatus(); updateMountainWeather(); });
+
+    if ("serviceWorker" in navigator && ["https:", "http:"].includes(location.protocol) && window.isSecureContext) {
+      renderOfflineStatus();
+      navigator.serviceWorker.register("./sw.js", { scope: "./", updateViaCache: "none" }).then(registration => {
+        const showUpdate = () => { updateButton.hidden = !registration.waiting; };
+        showUpdate();
+        registration.addEventListener("updatefound", () => {
+          registration.installing?.addEventListener("statechange", showUpdate);
+        });
+        updateButton.addEventListener("click", () => {
+          if (!registration.waiting) return;
+          updateButton.disabled = true;
+          navigator.serviceWorker.addEventListener("controllerchange", () => location.reload(), { once: true });
+          registration.waiting.postMessage({ type: "SKIP_WAITING" });
+        });
+        return navigator.serviceWorker.ready;
+      }).then(() => { offlineReady = true; renderOfflineStatus(); }).catch(() => {
+        offlineStatus.textContent = "離線資料未準備完成，請確認網路後重新載入。";
+      });
+    } else {
+      offlineStatus.textContent = "離線安裝需透過 HTTPS 網站開啟。";
+    }
+
+    updateMountainWeather();
     renderDay();
     renderTodos();
+    persistPacking(packingData);
     renderPackingList();
   </script>
 </body>
