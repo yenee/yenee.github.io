@@ -1,4 +1,5 @@
 import json
+import ssl
 import tempfile
 import unittest
 from datetime import date, datetime, timedelta
@@ -105,6 +106,15 @@ class UpdateStatusTests(unittest.TestCase):
                 update_sunrise.update_status()
 
         self.assertEqual(self.status_path.read_text(encoding="utf-8"), previous)
+
+    def test_fetch_relaxes_strict_certificate_profile_but_keeps_tls_verification(self):
+        with self.fetch_markup() as fetch:
+            update_sunrise.update_status()
+
+        context = fetch.call_args.kwargs["context"]
+        self.assertEqual(context.verify_mode, ssl.CERT_REQUIRED)
+        self.assertTrue(context.check_hostname)
+        self.assertFalse(context.verify_flags & ssl.VERIFY_X509_STRICT)
 
 
 if __name__ == "__main__":

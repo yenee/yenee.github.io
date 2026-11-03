@@ -1,6 +1,7 @@
 import html
 import json
 import re
+import ssl
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
@@ -10,6 +11,12 @@ ROOT = Path(__file__).resolve().parents[1]
 STATUS_PATH = ROOT / "sunrise-status.json"
 SOURCE_URL = "https://afrts.forest.gov.tw/TP01_1.aspx"
 TAIPEI = timezone(timedelta(hours=8))
+
+
+def create_ssl_context() -> ssl.SSLContext:
+    context = ssl.create_default_context()
+    context.verify_flags &= ~ssl.VERIFY_X509_STRICT
+    return context
 
 
 def parse_notice(markup: str, today: date) -> dict[str, str]:
@@ -44,7 +51,7 @@ def parse_notice(markup: str, today: date) -> dict[str, str]:
 
 def update_status() -> bool:
     request = Request(SOURCE_URL, headers={"User-Agent": "AlishanChiayiSlowTravel/1.0"})
-    with urlopen(request, timeout=20) as response:
+    with urlopen(request, timeout=20, context=create_ssl_context()) as response:
         markup = response.read().decode("utf-8", errors="replace")
 
     now = datetime.now(TAIPEI)
