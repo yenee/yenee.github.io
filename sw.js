@@ -1,7 +1,8 @@
 const CACHE_PREFIX = `alishan-trip-${new URL(self.registration.scope).pathname}-`;
-const CACHE_NAME = `${CACHE_PREFIX}v2`;
+const CACHE_NAME = `${CACHE_PREFIX}v14`;
 const SHELL_URL = new URL("index.html", self.registration.scope).href;
-const ASSET_URLS = ["index.html", "manifest.json", "icon-192.png", "icon-512.png", "apple-touch-icon.png"]
+const SUNRISE_STATUS_URL = new URL("sunrise-status.json", self.registration.scope).href;
+const ASSET_URLS = ["index.html", "manifest.json", "sunrise-status.json", "icon-192.png", "icon-512.png", "apple-touch-icon.png"]
   .map(path => new URL(path, self.registration.scope).href);
 
 self.addEventListener("install", event => {
@@ -40,6 +41,18 @@ self.addEventListener("fetch", event => {
         return (await cache.match(SHELL_URL)) || new Response("Offline page not cached yet.", { status: 503, headers: { "Content-Type": "text/plain; charset=utf-8" } });
       } finally {
         clearTimeout(timeout);
+      }
+    })());
+  } else if (assetUrl === SUNRISE_STATUS_URL) {
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
+      try {
+        const response = await fetch(event.request);
+        if (!response.ok) throw new Error("Sunrise notice unavailable");
+        await cache.put(SUNRISE_STATUS_URL, response.clone());
+        return response;
+      } catch {
+        return (await cache.match(SUNRISE_STATUS_URL)) || new Response("{}", { status: 503, headers: { "Content-Type": "application/json" } });
       }
     })());
   } else if (ASSET_URLS.includes(assetUrl)) {
