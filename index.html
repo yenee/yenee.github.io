@@ -152,6 +152,17 @@
     .transport-group { margin-top: 28px; }
     .transport-group h3 { margin: 0 0 9px; font-size: 18px; }
     .transport-note { margin: 12px 0 0; color: var(--muted); font-size: 12px; }
+    .shuttle-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+    .shuttle-card { min-width: 0; padding: 14px; border: 1px solid var(--line); border-radius: 5px; background: var(--paper-light); }
+    .shuttle-card h4 { display: flex; align-items: baseline; gap: 7px; margin: 0 0 8px; color: var(--forest); font-size: 16px; }
+    .shuttle-card h4 span { color: var(--muted); font: 700 11px/1.3 "Segoe UI", sans-serif; }
+    .shuttle-card p { margin: 5px 0; color: var(--muted); font-size: 13px; }
+    .shuttle-route-facts { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--line); font-size: 12px; }
+    .shuttle-fares { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 9px 0 0; color: var(--forest); font-size: 13px; font-weight: 700; }
+    .shuttle-fares span { white-space: nowrap; }
+    .shuttle-tickets { margin-top: 18px; padding-top: 13px; border-top: 1px solid var(--line); }
+    .shuttle-tickets h4 { margin: 0 0 7px; color: var(--forest); font-size: 15px; }
+    .shuttle-tickets p { margin: 6px 0; color: var(--muted); font-size: 13px; }
     .official-link { color: var(--rust); font: 700 12px/1.6 "Segoe UI", sans-serif; text-decoration-thickness: 1px; text-underline-offset: 3px; }
     .memo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 34px; margin-top: 20px; }
     .memo { padding: 17px 0; border-top: 1px solid var(--line); }
@@ -159,7 +170,7 @@
     .memo p { margin: 0; color: var(--muted); font-size: 13px; }
     .food-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
     .food-list span { padding: 3px 8px; border: 1px solid var(--line); color: var(--ink); font-size: 11px; }
-    .hotel-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 20px 0 30px; border-block: 1px solid var(--line); }
+    .hotel-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 20px 0 30px; border-block: 1px solid var(--line); }
     .hotel-summary > div { min-width: 0; padding: 14px 18px 14px 0; }
     .hotel-summary > div + div { padding-left: 18px; border-left: 1px solid var(--line); }
     .hotel-summary dt { color: var(--muted); font: 700 10px/1.4 "Segoe UI", sans-serif; letter-spacing: .08em; }
@@ -195,6 +206,77 @@
     .app-status { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding: 0; color: var(--muted); font-size: 12px; }
     .app-status button { min-height: 40px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 3px; background: var(--paper-light); color: var(--forest); cursor: pointer; }
     .app-status button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+    .home-intro { max-width: 760px; margin: 0 auto; padding: 4px 0 20px; text-align: center; }
+    .home-intro h2 { margin: 0; font-size: 24px; line-height: 1.3; }
+    .home-intro p { margin: 5px 0 0; color: var(--muted); font-size: 14px; }
+    .home-section { margin: 22px 0; }
+    .home-section h3 { margin: 0 0 11px; color: var(--forest); font-size: 17px; }
+    .home-days { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .home-day { min-height: 104px; padding: 13px 15px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper-light); text-align: left; cursor: pointer; }
+    .home-day:hover, .home-day:focus-visible { border-color: var(--forest); background: var(--forest-light); }
+    .home-day strong, .home-day span { display: block; }
+    .home-day strong { color: var(--forest); font-size: 15px; }
+    .home-day span { margin-top: 5px; color: var(--muted); font-size: 12px; }
+    .home-reminders { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 20px; border-block: 1px solid var(--line); }
+    .home-reminder { display: flex; align-items: flex-start; gap: 11px; min-width: 0; padding: 13px 0; border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+    .home-reminder svg { flex: 0 0 auto; width: 19px; height: 19px; fill: none; stroke: var(--rust); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .home-reminder strong, .home-reminder span { display: block; }
+    .home-reminder strong { font-size: 14px; }
+    .home-reminder span { margin-top: 2px; color: var(--muted); font-size: 12px; }
+    .home-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 15px; }
+    .home-action { min-height: 44px; padding: 8px 13px; border: 1px solid var(--line); border-radius: 4px; background: var(--paper-light); color: var(--forest); font-size: 14px; font-weight: 700; cursor: pointer; }
+    .home-action:hover { border-color: var(--forest); background: var(--forest-light); }
+    .panel-back { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; }
+    .panel-back button { min-height: 44px; padding: 7px 10px 7px 0; border: 0; background: transparent; color: var(--forest); font-weight: 700; cursor: pointer; }
+    .panel-back h2 { margin: 0; font-size: 20px; }
+    .map-day-tabs { display: flex; gap: 7px; margin: 16px 0; }
+    .map-day-button { min-width: 72px; min-height: 40px; padding: 7px 12px; border: 1px solid var(--line); border-radius: 4px; background: var(--paper-light); color: var(--muted); font-size: 13px; font-weight: 700; cursor: pointer; }
+    .map-day-button[aria-pressed="true"] { border-color: var(--forest); background: var(--forest-light); color: var(--forest); }
+    .map-layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(240px, .65fr); gap: 20px; align-items: start; }
+    .map-frame-wrap { overflow: hidden; border: 1px solid var(--line); border-radius: 6px; background: var(--paper-light); }
+    .map-frame { display: block; width: 100%; aspect-ratio: 1.35; border: 0; background: var(--forest-light); }
+    .map-frame-caption { margin: 0; padding: 9px 12px; color: var(--muted); font-size: 12px; }
+    .map-offline { margin: 0; padding: 20px; color: var(--muted); font-size: 14px; }
+    .map-stops { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    .map-stop { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 9px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .map-stop-number { display: grid; place-items: center; width: 22px; height: 22px; border: 1px solid var(--gold); border-radius: 50%; color: var(--forest); font: 700 11px/1 "Segoe UI", sans-serif; }
+    .map-stop-select { min-width: 0; padding: 0; border: 0; background: transparent; color: var(--ink); text-align: left; cursor: pointer; font-size: 13px; font-weight: 700; }
+    .map-stop-select[aria-pressed="true"] { color: var(--forest); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 3px; }
+    .map-stop-select:disabled { color: var(--muted); cursor: default; }
+    .map-stop a { color: var(--ink); font-size: 14px; font-weight: 700; text-decoration-color: var(--rust); text-underline-offset: 3px; }
+    .map-stop a { font-size: 12px; white-space: nowrap; }
+    .map-source { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 14px; }
+    .more-menu { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin: 18px 0 26px; }
+    .more-item { display: flex; align-items: center; gap: 12px; min-height: 58px; padding: 10px 13px; border: 1px solid var(--line); border-radius: 5px; background: var(--paper-light); color: var(--ink); text-align: left; cursor: pointer; }
+    .more-item:hover, .more-item:focus-visible { border-color: var(--forest); background: var(--forest-light); }
+    .more-item svg { flex: 0 0 auto; width: 19px; height: 19px; fill: none; stroke: var(--forest); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .more-item span { flex: 1; font-size: 14px; font-weight: 700; }
+    .more-item::after { content: "›"; color: var(--muted); font: 20px/1 "Segoe UI", sans-serif; }
+    .more-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+    .more-controls legend { margin-bottom: 5px; color: var(--muted); font-size: 12px; }
+    .more-controls .layout-switch { gap: 6px; }
+    .more-controls .layout-button { min-height: 42px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px; }
+    .navigation-wrap { position: fixed; z-index: 20; inset: auto 0 0; padding: 7px 16px calc(7px + env(safe-area-inset-bottom)); border: 0; border-top: 1px solid var(--line); background: rgba(243, 237, 218, .97); backdrop-filter: blur(14px); }
+    .navigation-inner { display: block; width: min(100%, 560px); margin: 0 auto; }
+    .navigation-inner .main-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); width: 100%; gap: 4px; }
+    .bottom-tab { display: grid; place-items: center; gap: 2px; min-width: 0; min-height: 48px; padding: 4px 2px; border: 0; border-radius: 5px; background: transparent; color: var(--muted); cursor: pointer; }
+    .bottom-tab svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .bottom-tab span { font: 700 10px/1.2 "Segoe UI", sans-serif; }
+    .bottom-tab[aria-current="page"] { color: var(--forest); }
+    .bottom-tab[aria-current="page"] svg { stroke-width: 2.2; }
+    .bottom-tab:focus-visible, .home-day:focus-visible, .home-action:focus-visible, .map-day-button:focus-visible, .map-stop-select:focus-visible, .more-item:focus-visible, .panel-back button:focus-visible { outline: 3px solid rgba(166, 78, 53, .42); outline-offset: 2px; }
+    body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+    body[data-active-panel]:not([data-active-panel="home"]) .hero { display: none; }
+    @media (min-width: 721px) {
+      body { padding-bottom: 0; }
+      .navigation-wrap { position: sticky; inset: 0 0 auto; padding: 7px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .navigation-inner { display: flex; width: min(1120px, calc(100% - 48px)); justify-content: center; }
+      .bottom-tab { display: flex; flex: 1; flex-direction: row; gap: 8px; max-width: 180px; min-height: 44px; padding: 7px 12px; }
+      .bottom-tab span { font-size: 13px; }
+      .hero { padding: 30px 0 20px; }
+      .home-reminders { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .map-layout { grid-template-columns: minmax(0, 1.5fr) minmax(270px, .5fr); }
+    }
     @media (max-width: 720px) {
       .page { width: min(100% - 30px, 560px); }
       .hero { grid-template-columns: 1fr; gap: 8px; padding: 28px 0 24px; }
@@ -230,6 +312,25 @@
       .packing-grid { grid-template-columns: 1fr; }
       .schedule-tools { width: 100%; }
       .search { width: 100%; }
+      .hero { gap: 4px; padding: 20px 0 14px; }
+      h1 { margin: 10px 0 12px; }
+      .hero-art { width: min(100%, 320px); max-height: 145px; }
+      .home-intro { padding: 0; text-align: left; }
+      .home-intro .eyebrow { font-size: 10px; }
+      .home-days { gap: 7px; }
+      .home-day { min-height: 100px; padding: 10px 8px; }
+      .home-day strong { font-size: 12px; }
+      .home-day span { font-size: 11px; }
+      .home-reminders { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 12px; }
+      .home-reminder { padding: 10px 0; }
+      .home-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .home-action { padding-inline: 8px; font-size: 13px; }
+      .shuttle-grid { grid-template-columns: 1fr; }
+      .shuttle-card { padding: 12px; }
+      .map-layout { grid-template-columns: 1fr; }
+      .map-frame { aspect-ratio: 1.1; }
+      .more-menu { grid-template-columns: 1fr; gap: 7px; }
+      .more-item { min-height: 54px; }
     }
     body[data-layout-mode="mobile"] .page { width: min(560px, calc(100% - 30px)); }
     body[data-layout-mode="mobile"] .hero { grid-template-columns: 1fr; gap: 8px; padding: 28px 0 24px; }
@@ -328,6 +429,19 @@
       .event, .todo-item, .memo { animation: rise .35s both; }
       @keyframes rise { from { opacity: .4; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     }
+    @media (max-width: 720px) {
+      .navigation-wrap { inset: auto 0 0; margin: 0; padding: 7px 16px calc(7px + env(safe-area-inset-bottom)); }
+      .navigation-inner { width: min(100%, 560px); }
+      body[data-layout-mode="mobile"] .navigation-wrap .main-tabs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      body[data-layout-mode="mobile"] .navigation-wrap .navigation-inner { width: min(100%, 560px); }
+      body[data-layout-mode="mobile"] .hero { gap: 4px; padding: 18px 0 12px; }
+      body[data-layout-mode="mobile"] h1 { margin: 10px 0 12px; }
+      body[data-layout-mode="mobile"] .hero-art { width: min(100%, 320px); max-height: 145px; }
+      body[data-layout-mode="mobile"] .home-reminder { gap: 7px; padding: 7px 0; }
+      body[data-layout-mode="mobile"] .home-reminder svg { width: 16px; height: 16px; }
+      body[data-layout-mode="mobile"] .home-reminder strong { font-size: 12px; line-height: 1.35; }
+      body[data-layout-mode="mobile"] .home-reminder span { font-size: 11px; line-height: 1.35; }
+    }
   </style>
 </head>
 <body>
@@ -350,6 +464,13 @@ https://lucide.dev/license</metadata>
       <symbol id="icon-rain" viewBox="0 0 24 24"><path d="M4 14.9A7 7 0 1 1 16.25 8H18a4 4 0 0 1 2 7.5M8 16v4m4-2v4m4-6v4"/></symbol>
       <symbol id="icon-sunrise" viewBox="0 0 24 24"><path d="M12 2v2m-7 3 1.5 1.5M2 14h2m16 0h2m-4.5-5.5L19 7M8 16a4 4 0 1 1 8 0M2 20h20M12 12V8m-2 2 2-2 2 2"/></symbol>
       <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M3 11a9 9 0 0 1 15-6l3 3M21 3v5h-5m5 5a9 9 0 0 1-15 6l-3-3m0 5v-5h5"/></symbol>
+      <symbol id="icon-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1Z"/></symbol>
+      <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18m-13 4h3m-3 3h7"/></symbol>
+      <symbol id="icon-map" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+      <symbol id="icon-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+      <symbol id="icon-cloud" viewBox="0 0 24 24"><path d="M20 16.2A4.5 4.5 0 0 0 18 7.5h-1A7 7 0 1 0 5 17h13a4 4 0 0 0 2-0.8Z"/><path d="m8 20-1 2m6-2-1 2m6-2-1 2"/></symbol>
+      <symbol id="icon-list" viewBox="0 0 24 24"><path d="M9 5h11M9 12h11M9 19h11M4 5h.01M4 12h.01M4 19h.01"/></symbol>
+      <symbol id="icon-suitcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M12 11v6M3 12h18"/></symbol>
     </defs>
   </svg>
   <div class="page">
@@ -450,37 +571,100 @@ https://lucide.dev/license</metadata>
 
     <div class="navigation-wrap">
       <div class="navigation-inner page">
-      <nav class="main-tabs" role="tablist" aria-label="行程資訊分類">
-        <button class="tab-button" id="tab-itinerary" type="button" role="tab" aria-selected="true" aria-controls="panel-itinerary" data-view="itinerary">每日行程</button>
-        <button class="tab-button" id="tab-todos" type="button" role="tab" aria-selected="false" aria-controls="panel-todos" data-view="todos">預訂待辦</button>
-        <button class="tab-button" id="tab-transport" type="button" role="tab" aria-selected="false" aria-controls="panel-transport" data-view="transport">交通班次</button>
-        <button class="tab-button" id="tab-notes" type="button" role="tab" aria-selected="false" aria-controls="panel-notes" data-view="notes">行程備忘</button>
-        <button class="tab-button" id="tab-hotel" type="button" role="tab" aria-selected="false" aria-controls="panel-hotel" data-view="hotel">住宿指南</button>
-        <button class="tab-button" id="tab-packing" type="button" role="tab" aria-selected="false" aria-controls="panel-packing" data-view="packing">行李清單</button>
+      <nav class="main-tabs" id="main-navigation" aria-label="主要導覽">
+        <button class="bottom-tab" id="nav-home" type="button" data-view="home" aria-current="page"><svg aria-hidden="true"><use href="#icon-home"/></svg><span>首頁</span></button>
+        <button class="bottom-tab" id="nav-itinerary" type="button" data-view="itinerary"><svg aria-hidden="true"><use href="#icon-calendar"/></svg><span>行程</span></button>
+        <button class="bottom-tab" id="nav-map" type="button" data-view="map"><svg aria-hidden="true"><use href="#icon-map"/></svg><span>地圖</span></button>
+        <button class="bottom-tab" id="nav-more" type="button" data-view="more"><svg aria-hidden="true"><use href="#icon-more"/></svg><span>更多</span></button>
       </nav>
-      <div class="display-controls">
-      <div class="layout-switch" role="group" aria-label="切換版面">
-        <button class="layout-button" type="button" data-layout-choice="desktop" aria-pressed="false" aria-label="切換電腦版版面">
-          <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="3" width="15" height="10.5" rx="1"/><path d="M7 17h6M10 13.5V17"/></svg><span>電腦版</span>
-        </button>
-        <button class="layout-button" type="button" data-layout-choice="mobile" aria-pressed="false" aria-label="切換手機版版面">
-          <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="5.5" y="1.8" width="9" height="16.4" rx="1.7"/><path d="M8.5 4h3M9 15.5h2"/></svg><span>手機版</span>
-        </button>
-      </div>
-      <div class="text-size-controls" role="group" aria-label="調整字體大小">
-        <button class="layout-button font-step-button" id="text-size-decrease" type="button" aria-label="縮小字體" title="縮小字體">A−</button>
-        <button class="layout-button font-step-button" id="text-size-increase" type="button" aria-label="放大字體" title="放大字體">A+</button>
-      </div>
-      </div>
       </div>
     </div>
 
     <main>
-      <section id="panel-itinerary" role="tabpanel" aria-labelledby="tab-itinerary" data-panel="itinerary">
+      <section id="panel-home" data-panel="home" aria-labelledby="home-days-title">
+        <div class="home-intro"><div class="eyebrow">MY TRAVEL JOURNAL</div></div>
+        <section class="home-section" aria-labelledby="home-days-title">
+          <h3 id="home-days-title">行程章節</h3>
+          <div class="home-days">
+            <button class="home-day" type="button" data-go-day="0"><strong>DAY 01</strong><span>阿里山 · 山林步道</span></button>
+            <button class="home-day" type="button" data-go-day="1"><strong>DAY 02</strong><span>祝山 · 奮起湖</span></button>
+            <button class="home-day" type="button" data-go-day="2"><strong>DAY 03</strong><span>嘉義 · 市區散步</span></button>
+          </div>
+        </section>
+        <section class="home-section" aria-labelledby="home-reminders-title">
+          <h3 id="home-reminders-title">旅程提醒</h3>
+          <div class="home-reminders">
+            <div class="home-reminder"><svg aria-hidden="true"><use href="#icon-train"/></svg><div><strong>回程高鐵 850</strong><span>11/24 · 嘉義 19:00 發車</span></div></div>
+            <div class="home-reminder"><svg aria-hidden="true"><use href="#icon-hotel"/></svg><div><strong>阿里山閣大飯店</strong><span>11/22 入住 · 記得確認接駁</span></div></div>
+            <div class="home-reminder"><svg aria-hidden="true"><use href="#icon-hotel"/></svg><div><strong>嘉義觀止</strong><span>11/23 入住 · 接駁需預約</span></div></div>
+            <div class="home-reminder"><svg aria-hidden="true"><use href="#icon-bus"/></svg><div><strong>祝山日出列車</strong><span>乘車前一日下午查看官方公告</span></div></div>
+          </div>
+          <div class="home-actions">
+            <button class="home-action" type="button" data-view="itinerary">查看每日行程</button>
+            <button class="home-action" type="button" data-view="map">開啟行程地圖</button>
+            <button class="home-action" type="button" data-open-panel="todos">查看預訂待辦</button>
+            <button class="home-action" type="button" data-open-panel="weather">天氣與日出</button>
+          </div>
+        </section>
+      </section>
+
+      <section id="panel-itinerary" role="tabpanel" aria-labelledby="itinerary-heading" data-panel="itinerary" hidden>
+        <div class="panel-back"><button type="button" data-back-home>‹ 首頁</button></div>
         <div class="section-heading">
-          <div><h2>沿著山線慢慢走</h2><p>選擇日期查看當天的時間、移動方式與行程細節。</p></div>
+          <div><h2 id="itinerary-heading">沿著山線慢慢走</h2><p>選擇日期查看當天的時間、移動方式與行程細節。</p></div>
           <div class="schedule-tools"><input class="search" id="schedule-search" type="search" placeholder="搜尋當日行程" aria-label="搜尋當日行程"></div>
         </div>
+        <div class="day-tabs" role="tablist" aria-label="選擇行程日期">
+          <button class="day-button" type="button" role="tab" aria-selected="true" data-day="0">Day 1 · 11/22</button>
+          <button class="day-button" type="button" role="tab" aria-selected="false" data-day="1">Day 2 · 11/23</button>
+          <button class="day-button" type="button" role="tab" aria-selected="false" data-day="2">Day 3 · 11/24</button>
+        </div>
+        <div id="day-content" aria-live="polite"></div>
+      </section>
+
+      <section id="panel-map" data-panel="map" aria-labelledby="map-heading" hidden>
+        <div class="panel-back"><button type="button" data-back-home>‹ 首頁</button></div>
+        <div class="section-heading"><div><h2 id="map-heading">沿著山線去旅行</h2><p>依每日停留地點整理；路線僅供行程參考，實際步道與道路請依園區指標及地圖導航。</p></div></div>
+        <div class="map-day-tabs" role="group" aria-label="選擇地圖日期">
+          <button class="map-day-button" type="button" data-map-day="0" aria-pressed="true">Day 1</button>
+          <button class="map-day-button" type="button" data-map-day="1" aria-pressed="false">Day 2</button>
+          <button class="map-day-button" type="button" data-map-day="2" aria-pressed="false">Day 3</button>
+        </div>
+        <div class="map-layout">
+          <div class="map-frame-wrap">
+            <iframe class="map-frame" id="map-frame" title="阿里山與嘉義行程地圖" loading="lazy"></iframe>
+            <p class="map-frame-caption" id="map-frame-caption">OpenStreetMap © contributors · 地圖底圖為實際地理資料，行程順序請以下方站點為準。</p>
+          </div>
+          <div><h3 class="transport-group">當日停留地點</h3><ol class="map-stops" id="map-stops"></ol></div>
+        </div>
+        <div class="map-source"><a class="official-link" href="https://recreation.forest.gov.tw/Forest/RA?typ_id=0500001" target="_blank" rel="noopener noreferrer">林業保育署・阿里山園區導覽與步道資料 ↗</a><a class="official-link" href="https://www.ali-nsa.net/zh-tw/attractions/map" target="_blank" rel="noopener noreferrer">阿里山國家風景區旅遊地圖 ↗</a></div>
+      </section>
+
+      <section id="panel-more" data-panel="more" aria-labelledby="more-heading" hidden>
+        <div class="panel-back"><button type="button" data-back-home>‹ 首頁</button></div>
+        <div class="section-heading"><div><h2 id="more-heading">更多旅程資訊</h2><p>旅途中需要的天氣、交通與準備清單。</p></div></div>
+        <nav class="more-menu" aria-label="更多旅程資訊">
+          <button class="more-item" type="button" data-open-panel="weather"><svg aria-hidden="true"><use href="#icon-cloud"/></svg><span>天氣與日出</span></button>
+          <button class="more-item" type="button" data-open-panel="todos"><svg aria-hidden="true"><use href="#icon-list"/></svg><span>預訂待辦</span></button>
+          <button class="more-item" type="button" data-open-panel="transport"><svg aria-hidden="true"><use href="#icon-bus"/></svg><span>交通班次與遊園車</span></button>
+          <button class="more-item" type="button" data-open-panel="hotel"><svg aria-hidden="true"><use href="#icon-hotel"/></svg><span>住宿指南</span></button>
+          <button class="more-item" type="button" data-open-panel="notes"><svg aria-hidden="true"><use href="#icon-place"/></svg><span>行程備忘與分帳</span></button>
+          <button class="more-item" type="button" data-open-panel="packing"><svg aria-hidden="true"><use href="#icon-suitcase"/></svg><span>行李清單</span></button>
+        </nav>
+        <div class="more-controls">
+          <fieldset class="layout-switch" role="group" aria-label="切換版面"><legend>版面</legend>
+            <button class="layout-button" type="button" data-layout-choice="desktop" aria-pressed="false" aria-label="切換電腦版版面"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="3" width="15" height="10.5" rx="1"/><path d="M7 17h6M10 13.5V17"/></svg><span>電腦版</span></button>
+            <button class="layout-button" type="button" data-layout-choice="mobile" aria-pressed="false" aria-label="切換手機版版面"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="5.5" y="1.8" width="9" height="16.4" rx="1.7"/><path d="M8.5 4h3M9 15.5h2"/></svg><span>手機版</span></button>
+          </fieldset>
+          <fieldset class="text-size-controls" role="group" aria-label="調整字體大小"><legend>字級</legend>
+            <button class="layout-button font-step-button" id="text-size-decrease" type="button" aria-label="縮小字體" title="縮小字體">A−</button>
+            <button class="layout-button font-step-button" id="text-size-increase" type="button" aria-label="放大字體" title="放大字體">A+</button>
+          </fieldset>
+        </div>
+      </section>
+
+      <section id="panel-weather" data-panel="weather" aria-labelledby="weather-heading" hidden>
+        <div class="panel-back"><button type="button" data-back-more>‹ 更多</button><h2 id="weather-heading">天氣與日出</h2></div>
         <details class="mountain-weather" id="mountain-weather" open>
           <summary>天氣與日出</summary>
           <div class="weather-toolbar">
@@ -502,24 +686,20 @@ https://lucide.dev/license</metadata>
             </details>
           </div>
         </details>
-        <div class="day-tabs" role="tablist" aria-label="選擇行程日期">
-          <button class="day-button" type="button" role="tab" aria-selected="true" data-day="0">Day 1 · 11/22</button>
-          <button class="day-button" type="button" role="tab" aria-selected="false" data-day="1">Day 2 · 11/23</button>
-          <button class="day-button" type="button" role="tab" aria-selected="false" data-day="2">Day 3 · 11/24</button>
-        </div>
-        <div id="day-content" aria-live="polite"></div>
       </section>
 
-      <section id="panel-todos" role="tabpanel" aria-labelledby="tab-todos" data-panel="todos" hidden>
+      <section id="panel-todos" role="tabpanel" aria-labelledby="todos-heading" data-panel="todos" hidden>
+        <div class="panel-back"><button type="button" data-back-more>‹ 更多</button></div>
         <div class="section-heading">
-          <div><h2>出發前，逐項確認</h2><p>已完成狀態會保存在這台裝置的瀏覽器。</p></div>
+          <div><h2 id="todos-heading">出發前，逐項確認</h2><p>已完成狀態會保存在這台裝置的瀏覽器。</p></div>
           <div class="todo-summary"><span id="todo-count">0 / 0 已完成</span><span class="progress-track" aria-hidden="true"><span class="progress-fill" id="todo-progress"></span></span></div>
         </div>
         <ul class="todo-list" id="todo-list"></ul>
       </section>
 
-      <section id="panel-transport" role="tabpanel" aria-labelledby="tab-transport" data-panel="transport" hidden>
-        <div class="section-heading"><div><h2>山線交通時刻</h2><p>Day 2 · 阿里山 → 奮起湖 → 嘉義，方便比較下山選項。</p></div></div>
+      <section id="panel-transport" role="tabpanel" aria-labelledby="transport-heading" data-panel="transport" hidden>
+        <div class="panel-back"><button type="button" data-back-more>‹ 更多</button></div>
+        <div class="section-heading"><div><h2 id="transport-heading">山線交通時刻</h2><p>Day 2 · 阿里山 → 奮起湖 → 嘉義，方便比較下山選項。</p></div></div>
         <div class="transport-group">
           <h3>公車 / 台灣好行</h3>
           <p class="transport-note">官方時刻表：<a class="official-link" href="https://www.taiwantrip.com.tw/Frontend/Bustime/TimeTable/R0007" target="_blank" rel="noreferrer">阿里山線 A 線（高鐵出發）↗</a> · <a class="official-link" href="https://www.taiwantrip.com.tw/Frontend/Bustime/TimeTable/R0008" target="_blank" rel="noreferrer">阿里山線 B 線（台鐵出發）↗</a></p>
@@ -545,10 +725,45 @@ https://lucide.dev/license</metadata>
           </table></div>
           <p class="transport-note">前 14 天優先販售全段票（$600），前 3 天才釋出奮起湖區間票（$384）。</p>
         </div>
+        <div class="transport-group" data-park-shuttle="true">
+          <h3>阿里山園區電動遊園車</h3>
+          <p class="transport-note">每日遊園導覽服務時間 AM 08:00~PM 05:00 · 洽詢電話 <a href="tel:052679917">(05)267-9917</a></p>
+          <div class="shuttle-grid">
+            <article class="shuttle-card">
+              <h4>沼平線 <span>(藍線)</span></h4>
+              <p>乘車地點：候車總站、遊客中心站乘車站牌。</p>
+              <p>停靠沼平公園前方，可於沼平站下車步行遊園姊妹潭等景點；沿線櫻花於花季是熱門拍照點。</p>
+              <div class="shuttle-route-facts"><span>遊客中心站 → 沼平站</span><strong>約 2.2 公里 · 約 10 分鐘（含上下車）</strong></div>
+              <div class="shuttle-fares"><span>全票單程 $70</span><span>半票單程 $35</span></div>
+            </article>
+            <article class="shuttle-card">
+              <h4>香林線 <span>(紅線)</span></h4>
+              <p>乘車地點：候車總站、遊客中心站乘車站牌。</p>
+              <p>停靠受鎮宮旁，可於香林站下車步行遊園巨木群棧道等景點。</p>
+              <div class="shuttle-route-facts"><span>遊客中心站 → 香林站</span><strong>約 1.8 公里 · 約 8 分鐘（含上下車）</strong></div>
+              <div class="shuttle-fares"><span>全票單程 $70</span><span>半票單程 $35</span></div>
+            </article>
+          </div>
+          <div class="shuttle-tickets">
+            <h4>祝山日出／日間專線（固定班次）</h4>
+            <p>適用站點：祝山車站及對高岳。12 歲（含）以上使用全票，以下優待資格請出示證件。</p>
+            <div class="shuttle-fares"><span>全票單程 $150</span><span>半票單程 $75</span></div>
+            <p>10/27 起日出首班 05:20、第二班 05:50。日出專線依日出時間調整，前一日 16:40 前可至遊客中心站購買預售票；詳情請洽售票亭或查看 FB 班次公告。</p>
+            <p><a class="official-link" href="https://www.facebook.com/alishanebus/?locale=zh_TW" target="_blank" rel="noopener noreferrer">阿里山電動遊園車 FB 班次公告 ↗</a></p>
+          </div>
+          <div class="shuttle-tickets">
+            <h4>祝山日間線（固定班次）</h4>
+            <p>適用站點：水山療癒步道及阿里山貴賓館。12 歲（含）以上使用全票。</p>
+            <div class="shuttle-fares"><span>全票單程 $100</span><span>半票單程 $50</span></div>
+          </div>
+          <p class="transport-note">半票資格：6 歲至未滿 12 歲兒童、65 歲以上本國籍長者、本國籍身心障礙者及必要陪伴者 1 人；購票時請出示相關證明。<br>行程備案另記園區接駁全票 $70；實際路線與服務異動請出發前確認。</p>
+          <p class="transport-note">官方資訊（查核 2026/11/06）：<a class="official-link" href="https://recreation.forest.gov.tw/Forest/RA?typ_id=0500001" target="_blank" rel="noopener noreferrer">阿里山國家森林遊樂區・遊園車與收費 ↗</a></p>
+        </div>
       </section>
 
-      <section id="panel-notes" role="tabpanel" aria-labelledby="tab-notes" data-panel="notes" hidden>
-        <div class="section-heading"><div><h2>路上記得的事</h2><p>容易漏看的費用、末班車和沿途想吃的店。</p></div></div>
+      <section id="panel-notes" role="tabpanel" aria-labelledby="notes-heading" data-panel="notes" hidden>
+        <div class="panel-back"><button type="button" data-back-more>‹ 更多</button></div>
+        <div class="section-heading"><div><h2 id="notes-heading">路上記得的事</h2><p>容易漏看的費用、末班車和沿途想吃的店。</p></div></div>
         <div class="memo-grid">
           <article class="memo"><h3>Day 1 · 神木線</h3><p>神木車站 → 阿里山車站末班車 16:10。單程全票 $100、半票 $50；若錯過，步行約 30 分鐘，或搭阿里山遊園車全票 $70。</p></article>
           <article class="memo"><h3>Day 1 · 入園與接駁</h3><p>先致電飯店確認接駁時間；抵達後可先買東西吃，再寄放行李。</p></article>
@@ -562,12 +777,14 @@ https://lucide.dev/license</metadata>
         </div>
       </section>
 
-      <section id="panel-hotel" role="tabpanel" aria-labelledby="tab-hotel" data-panel="hotel" hidden>
-        <div class="section-heading"><div><h2>阿里山閣大飯店</h2><p>入住、接駁與客房資訊，出發前先看一遍。 <a class="official-link" href="https://www.agh.com.tw/" target="_blank" rel="noreferrer">飯店官網 ↗</a></p></div></div>
+      <section id="panel-hotel" role="tabpanel" aria-labelledby="hotel-heading" data-panel="hotel" hidden>
+        <div class="panel-back"><button type="button" data-back-more>‹ 更多</button></div>
+        <div class="section-heading"><div><h2 id="hotel-heading">阿里山閣大飯店</h2><p>入住、接駁與客房資訊，出發前先看一遍。 <a class="official-link" href="https://www.agh.com.tw/" target="_blank" rel="noreferrer">飯店官網 ↗</a></p></div></div>
         <dl class="hotel-summary">
           <div><dt>飯店櫃檯</dt><dd><a href="tel:052679611">05-2679611</a></dd></div>
           <div><dt>至遊客服務中心／商店區</dt><dd>車程約 7 分鐘 · 步行約 20–25 分鐘</dd></div>
           <div><dt>接駁車辨識</dt><dd>白色 20 人座中型巴士，車側印有「阿里山閣大飯店」或「阿里山鄉公所」</dd></div>
+          <div><dt>入住／退房時間</dt><dd>入住 下午 3:00 後<br>退房 中午 11:00 前</dd></div>
         </dl>
 
         <div class="transport-group">
@@ -605,7 +822,7 @@ https://lucide.dev/license</metadata>
           <div class="memo-grid">
             <article class="memo"><h3>候車方式</h3><p>請提前 5–10 分鐘到指定站點等候。接駁車受路權限制，無法隨叫隨停；若遊客中心正門口沒有停車，請留意前後方。</p></article>
             <article class="memo"><h3>採買與園區交通</h3><p>飯店附近沒有便利商店，步行至商店街約 20–25 分鐘，建議提早買好必需品。阿里山園區內沒有計程車。</p></article>
-            <article class="memo"><h3>熱水時段</h3><p>熱水供應時間為 17:00–24:00；清晨僅提供溫水，請依供應時段安排盥洗。</p></article>
+            <article class="memo"><h3>熱水時段</h3><p>熱水供應時間為 17:00–24:00，清晨僅供應溫水；若需要其他時段的熱水，請斟酌訂房。</p></article>
             <article class="memo"><h3>晨間鐵道聲響</h3><p>飯店緊鄰沼平車站，是晨間觀日列車與巡邏台車必經處；平交道警示鈴聲無法避免，對聲音敏感者請留意。</p></article>
             <article class="memo"><h3>客房用電與安全</h3><p>避免同時使用多種高耗電電器，以免跳電。全館客房禁止吸菸、禁止烹煮食物。</p></article>
             <article class="memo"><h3>夜間安寧</h3><p>晚上 21:00 後請勿喧嘩。</p></article>
@@ -624,9 +841,10 @@ https://lucide.dev/license</metadata>
         </div>
       </section>
 
-      <section id="panel-packing" role="tabpanel" aria-labelledby="tab-packing" data-panel="packing" hidden>
+      <section id="panel-packing" role="tabpanel" aria-labelledby="packing-heading" data-panel="packing" hidden>
+        <div class="panel-back"><button type="button" data-back-more>‹ 更多</button></div>
         <div class="section-heading">
-          <div><h2>出發前，逐項收進行李</h2><p>依山區早晚溫差、步道與三天行程整理；清單與勾選狀態會保存在這台裝置。</p></div>
+          <div><h2 id="packing-heading">出發前，逐項收進行李</h2><p>依山區早晚溫差、步道與三天行程整理；清單與勾選狀態會保存在這台裝置。</p></div>
           <div class="todo-summary"><span id="packing-count">0 / 0 已完成</span><span class="progress-track" aria-hidden="true"><span class="progress-fill" id="packing-progress"></span></span></div>
         </div>
         <div class="packing-actions">
@@ -649,15 +867,17 @@ https://lucide.dev/license</metadata>
     const days = [
       {
         date: "2026/11/22（日）",
-        route: "高鐵南下 → 二延平茶園 → 阿里山閣 → 巨木步道＋神木小火車",
+        route: "高鐵南下 → 二延平茶園 → 阿里山閣 → 姊妹潭、巨木步道與博物館 → 商店街",
         events: [
           ["07:30", "搭乘高鐵 0805 次", "桃園 07:34 → 新竹 07:47 → 嘉義 08:55", "搭車"],
           ["09:20", "阿里山郵輪式接駁專車集合", "09:30 發車｜嘉義高鐵站 2 號出口外大客車停靠區｜行程含森林遊樂區門票", "搭車"],
           ["10:40", "二延平步道觀景台", "", "景點"],
           ["12:50", "阿里山森林遊樂區", "", "園區"],
           ["13:00", "步行至遊客服務中心", "抵達後請先致電 05-2679611 確認飯店接駁時間，再搭車前往飯店寄放行李", "步行"],
-          ["14:00", "步道健行", "飯店 → 姊妹潭 → 香林服務區（商圈有小吃）→ 巨木群棧道", "步行"],
-          ["16:00", "神木車站 → 阿里山車站", "16:10 末班車；全票 $100、半票 $50。錯過步行約 30 分鐘，或搭遊園車全票 $70", "搭車"],
+          ["14:00", "步道健行", "飯店 → 姊妹潭 → 香林服務區", "步行", "day1-hike-first"],
+          ["14:30", "香林服務區吃午餐", "", "用餐", "day1-lunch"],
+          ["15:30", "步道健行", "香林服務區 → 巨木群棧道 → 阿里山博物館", "步行", "day1-hike-second"],
+          ["16:00", "前往商店街", "A. 交通小火車：神木車站 → 阿里山車站，16:10 末班車；全票 $100、半票 $50。\nB. 步行約 30 分鐘，或搭遊園車（全票 $70）", "搭車", "day1-shopping"],
           ["17:00", "商店街晚餐", "", "用餐"],
           ["19:15", "飯店晚間回程接駁車", "班次：18:15 / 19:15 / 20:15", "搭車"],
           ["19:30", "入住阿里山閣大飯店", "", "住宿"]
@@ -699,6 +919,59 @@ https://lucide.dev/license</metadata>
       }
     ];
 
+    const mapDays = [
+      {
+        title: "Day 1 · 二延平與阿里山園區",
+        bbox: "120.625,23.405,120.84,23.53",
+        stops: [
+          ["二延平步道觀景台", "二延平步道觀景台", 23.4247116, 120.6526122],
+          ["阿里山遊客中心", "阿里山旅客服務中心", 23.5113889, 120.8036111],
+          ["阿里山閣大飯店", "阿里山閣大飯店", 23.5158505, 120.8145001],
+          ["姊妹潭", "阿里山姊妹潭", 23.518933, 120.8141845],
+          ["香林服務區", "香林服務區", 23.5179504, 120.8103948],
+          ["巨木群棧道（28 號巨木）", "巨木群棧道", 23.5191715, 120.8097219],
+          ["阿里山博物館", "阿里山博物館", 23.516855, 120.808334],
+          ["神木車站", "神木車站", 23.519174, 120.80668],
+          ["阿里山車站", "阿里山車站", 23.5100782, 120.8042059]
+        ]
+      },
+      {
+        title: "Day 2 · 祝山、阿里山與奮起湖",
+        bbox: "120.675,23.485,120.835,23.535",
+        stops: [
+          ["沼平車站", "沼平車站", 23.51441, 120.813853],
+          ["祝山車站", "祝山車站", 23.510354, 120.8231009],
+          ["小笠原山觀景台", "小笠原山觀景台 阿里山", 23.506129, 120.823798],
+          ["阿里山轉運站", "阿里山轉運站", 23.5083347, 120.8015244],
+          ["奮起湖第一停車場", "奮起湖第一停車場", 23.5051246, 120.6948811],
+          ["百年檜木甜甜圈", "百年檜木甜甜圈", 23.5037345, 120.6950206],
+          ["街仔尾阿嬤草仔粿", "街仔尾阿嬤草仔粿", 23.5039544, 120.6943499],
+          ["百年肖楠林", "百年肖楠林"],
+          ["嘉義車站", "嘉義車站", 23.479075, 120.441209],
+          ["嘉義觀止", "嘉義觀止", 23.47944, 120.429566]
+        ]
+      },
+      {
+        title: "Day 3 · 嘉義市區與高鐵站",
+        bbox: "120.31,23.45,120.49,23.56",
+        stops: [
+          ["檜意森活村", "檜意森活村 嘉義", 23.4850613, 120.4551542],
+          ["阿溪雞肉飯", "阿溪雞肉飯", 23.4725423, 120.4426381],
+          ["公園老店涼麵", "公園老店涼麵", 23.4802574, 120.4592245],
+          ["林聰明砂鍋魚頭", "林聰明砂鍋魚頭", 23.4787729, 120.4502528],
+          ["品安豆漿豆花", "品安豆漿豆花"],
+          ["玖零甜食所", "玖零甜食所"],
+          ["新華美西裝社", "新華美西裝社"],
+          ["嘉義車站", "嘉義車站", 23.479075, 120.441209],
+          ["嘉義觀止", "嘉義觀止", 23.47944, 120.429566],
+          ["番路鄉農會飲冰柿茶集", "番路鄉農會飲冰柿茶集", 23.4652539, 120.5506163],
+          ["KHTOY 絨毛玩偶旗艦館", "KHTOY 絨毛玩偶旗艦館 嘉義", 23.5193316, 120.4329524],
+          ["嘉義市美術館", "嘉義市美術館"], ["嘉義好市多", "嘉義好市多"],
+          ["高鐵嘉義站", "高鐵嘉義站", 23.45925, 120.32282]
+        ]
+      }
+    ];
+
     const eventMapLocations = {
       "二延平步道觀景台": "二延平步道觀景台",
       "阿里山森林遊樂區": "阿里山森林遊樂區",
@@ -726,11 +999,13 @@ https://lucide.dev/license</metadata>
       "二延平步道觀景台": "https://maps.app.goo.gl/QPhYnNRfs5UzkQtbA",
       "阿里山森林遊樂區": "https://maps.app.goo.gl/4CHUryA2a1RnKzws8",
       "阿里山閣大飯店": "https://maps.app.goo.gl/e8o1tLUcwPR3feD16",
+      "阿里山博物館": "https://maps.app.goo.gl/45Ng3i3ydcc4eSpb7",
       "阿里山姊妹潭": "https://maps.app.goo.gl/j8TNZUPPBpm3dJ5f7",
       "香林服務區": "https://maps.app.goo.gl/sDJxmGsbBS4SFgiE8",
       "巨木群棧道": "https://maps.app.goo.gl/fYNsg11SaFeSkbWG8",
       "神木車站": "https://maps.app.goo.gl/TU1Cg26f2VnZWrzf8",
       "阿里山車站": "https://maps.app.goo.gl/XSmm7KauA2CfmhBm6",
+      "遊園車": "https://maps.app.goo.gl/TbnwMtmT9csAn6Pi6",
       "沼平車站": "https://maps.app.goo.gl/kS5f7KxoxHzgoQ716",
       "祝山車站": "https://maps.app.goo.gl/ncWAof4H93Txe6M1A",
       "小笠原山觀景台 阿里山": "https://maps.app.goo.gl/gxCnxsNWEZkwj1hb9",
@@ -764,8 +1039,10 @@ https://lucide.dev/license</metadata>
       "搭公車 7322A → 奮起湖": { field: "detail", places: [["阿里山轉運站", "阿里山轉運站"], ["奮起湖第一停車場", "奮起湖第一停車場"]] },
       "夜宿嘉義觀止飯店": { field: "title", places: [["嘉義觀止飯店", "嘉義觀止"]] },
       "檜意森活村、嘉義市區閒逛": { field: "title", places: [["檜意森活村", "檜意森活村 嘉義"]] },
-      "步道健行": { field: "detail", places: [["飯店", "阿里山閣大飯店"], ["姊妹潭", "阿里山姊妹潭"], ["香林服務區", "香林服務區"], ["巨木群棧道", "巨木群棧道"]] },
-      "神木車站 → 阿里山車站": { field: "title", places: [["神木車站", "神木車站"], ["阿里山車站", "阿里山車站"]] },
+      "day1-hike-first": { field: "detail", places: [["飯店", "阿里山閣大飯店"], ["姊妹潭", "阿里山姊妹潭"], ["香林服務區", "香林服務區"]] },
+      "day1-lunch": { field: "title", places: [["香林服務區", "香林服務區"]] },
+      "day1-hike-second": { field: "detail", places: [["香林服務區", "香林服務區"], ["巨木群棧道", "巨木群棧道"], ["阿里山博物館", "阿里山博物館"]] },
+      "day1-shopping": { field: "detail", places: [["神木車站", "神木車站"], ["阿里山車站", "阿里山車站"], ["遊園車", "遊園車"]] },
       "沼平車站 → 祝山站": { field: "title", places: [["沼平車站", "沼平車站"], ["祝山站", "祝山車站"]] },
       "嘉義火車站 → 觀止飯店": { field: "title", places: [["嘉義火車站", "嘉義車站"], ["觀止飯店", "嘉義觀止"]] },
       "搭阿里山號 → 嘉義市區": { field: "detail", places: [["奮起湖車站", "奮起湖車站"], ["嘉義車站", "嘉義車站"]] },
@@ -838,9 +1115,9 @@ https://lucide.dev/license</metadata>
     const searchInput = document.querySelector("#schedule-search");
     let activeDay = 0;
 
-    function renderInlineMapText(text, title, field) {
-      const location = inlineMapLocations[title];
-      const place = eventMapLocations[title];
+    function renderInlineMapText(text, title, field, locationKey = title) {
+      const location = inlineMapLocations[locationKey];
+      const place = eventMapLocations[locationKey];
       const places = location?.field === field ? location.places
         : (field === "title" && typeof place === "string" ? [[title, place]] : []);
       const mappedText = places.reduce((content, [label, place]) => {
@@ -869,23 +1146,78 @@ https://lucide.dev/license</metadata>
       document.querySelector("#alishan-art-title").textContent = artDescriptions[activeDay][0];
       document.querySelector("#alishan-art-description").textContent = artDescriptions[activeDay][1];
       const query = searchInput.value.trim().toLocaleLowerCase();
-      const visibleEvents = day.events.filter((event) => event.join(" ").toLocaleLowerCase().includes(query));
+      const visibleEvents = day.events.filter((event) => event.slice(0, 4).join(" ").toLocaleLowerCase().includes(query));
       dayContent.innerHTML = `
         <header class="day-intro"><h3>${day.date}</h3><p>${day.route}</p></header>
-        <ol class="timeline">${visibleEvents.map(([time, title, detail, kind]) => {
+        <ol class="timeline">${visibleEvents.map(([time, title, detail, kind, mapKey]) => {
           const isSunriseTrain = title === "沼平車站 → 祝山站";
           const eventDetail = detail
-            ? `<p class="event-detail">${renderInlineMapText(detail, title, "detail")}</p>`
+            ? `<p class="event-detail">${renderInlineMapText(detail, title, "detail", mapKey)}</p>`
             : isSunriseTrain
               ? '<p class="event-detail" role="status" aria-live="polite"><span id="sunrise-train-status">正在載入官方祝山線公告…</span> · <a class="inline-map" href="https://afrts.forest.gov.tw/TP01_1.aspx" target="_blank" rel="noopener noreferrer">林鐵官方公告 ↗</a></p>'
               : "";
-          return `<li class="event"><time class="event-time"${isSunriseTrain ? ' id="sunrise-train-time"' : ""}>${time}</time><div class="event-body"><p class="event-title">${renderEventIcon(kind)}<span class="event-heading-text">${renderInlineMapText(title, title, "title")}</span></p>${eventDetail}</div></li>`;
+          return `<li class="event"><time class="event-time"${isSunriseTrain ? ' id="sunrise-train-time"' : ""}>${time}</time><div class="event-body"><p class="event-title">${renderEventIcon(kind)}<span class="event-heading-text">${renderInlineMapText(title, title, "title", mapKey)}</span></p>${eventDetail}</div></li>`;
         }).join("") || '<li class="event"><p class="event-detail">沒有符合的行程，試試其他關鍵字。</p></li>'}</ol>
         ${activeDay === 2 ? '<p class="notice">租車安排尚未確認</p>' : ""}
       `;
       if (activeDay === 1) {
         updateSunriseNotice();
       }
+    }
+
+    const mapFrame = document.querySelector("#map-frame");
+    const mapStops = document.querySelector("#map-stops");
+    const mapFrameCaption = document.querySelector("#map-frame-caption");
+    let activeMapDay = 0;
+    let activeMapStop = 0;
+
+    function focusMapStop(stopIndex) {
+      const route = mapDays[activeMapDay];
+      const stop = route.stops[stopIndex];
+      if (!stop || !Number.isFinite(stop[2]) || !Number.isFinite(stop[3])) return;
+      activeMapStop = stopIndex;
+      const parameters = new URLSearchParams({
+        bbox: route.bbox, layer: "mapnik", marker: `${stop[2]},${stop[3]}`
+      });
+      mapFrame.src = `https://www.openstreetmap.org/export/embed.html?${parameters}`;
+      mapFrameCaption.textContent = `${route.title} · 目前標記：${stop[0]}。OpenStreetMap © contributors；底圖需連網，離線時仍可使用下方地點清單與導航連結。`;
+      mapStops.querySelectorAll("[data-map-stop]").forEach(button => {
+        button.setAttribute("aria-pressed", String(Number(button.dataset.mapStop) === activeMapStop));
+      });
+    }
+
+    function renderMapDay() {
+      const route = mapDays[activeMapDay];
+      mapFrame.title = `${route.title}實際地圖`;
+      mapStops.replaceChildren();
+      route.stops.forEach(([label, place, latitude, longitude], index) => {
+        const row = document.createElement("li");
+        row.className = "map-stop";
+        const number = document.createElement("span");
+        number.className = "map-stop-number";
+        number.textContent = String(index + 1);
+        const select = document.createElement("button");
+        select.type = "button";
+        select.className = "map-stop-select";
+        select.dataset.mapStop = String(index);
+        select.textContent = label;
+        select.setAttribute("aria-pressed", "false");
+        select.disabled = !Number.isFinite(latitude) || !Number.isFinite(longitude);
+        if (select.disabled) select.title = "座標未核實，請使用右側導航連結";
+        select.addEventListener("click", () => focusMapStop(index));
+        const link = document.createElement("a");
+        link.textContent = "導航";
+        link.setAttribute("aria-label", `開啟${label}導航`);
+        link.href = placeMapUrls[place] || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place)}`;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        row.append(number, select, link);
+        mapStops.append(row);
+      });
+      focusMapStop(0);
+      document.querySelectorAll("[data-map-day]").forEach(button => {
+        button.setAttribute("aria-pressed", String(Number(button.dataset.mapDay) === activeMapDay));
+      });
     }
 
     const sunriseNoticeStorageKey = "alishan-trip-sunrise-notice";
@@ -908,9 +1240,8 @@ https://lucide.dev/license</metadata>
         }).format(new Date(value));
         const checkedAt = Date.parse(notice.checkedAt || notice.updatedAt);
         const checkedAtLabel = Number.isFinite(checkedAt) ? formatTime(checkedAt) : "時間未知";
-        const stale = !Number.isFinite(checkedAt) || checkedAt > Date.now() + 5 * 60 * 1000 || Date.now() - checkedAt > 26 * 60 * 60 * 1000;
         trainTime.textContent = notice.departureTime;
-        noticeText.textContent = `${dateLabel} 官方公告：觀日列車 ${notice.departureTime} 發車，回程末班車 ${notice.returnTime}，日出 ${notice.sunriseTime} · 公告內容更新 ${formatTime(notice.updatedAt)} · 最近成功查詢 ${checkedAtLabel}${stale ? " · 公告可能過期，請查看林鐵官方公告" : ""}`;
+        noticeText.textContent = `${dateLabel} 官方公告：觀日列車 ${notice.departureTime} 發車，回程末班車 ${notice.returnTime}，日出 ${notice.sunriseTime} · 公告內容更新 ${formatTime(notice.updatedAt)} · 最近成功查詢 ${checkedAtLabel}`;
       };
 
       if (!navigator.onLine) {
@@ -1178,10 +1509,46 @@ https://lucide.dev/license</metadata>
     textSizeDecrease.addEventListener("click", () => setTextSize(textSizeLevel - 1));
     textSizeIncrease.addEventListener("click", () => setTextSize(textSizeLevel + 1));
 
-    document.querySelectorAll("[data-view]").forEach((button) => {
+    const mainNavigation = document.querySelector("#main-navigation");
+    const detailPanels = new Set(["weather", "todos", "transport", "notes", "hotel", "packing"]);
+
+    function showPanel(panelName) {
+      if (!document.querySelector(`[data-panel="${panelName}"]`)) return;
+      document.querySelectorAll("[data-panel]").forEach(panel => { panel.hidden = panel.dataset.panel !== panelName; });
+      document.body.dataset.activePanel = panelName;
+      window.scrollTo({ top: 0, behavior: "instant" });
+      const navigationView = detailPanels.has(panelName) ? "more" : panelName;
+      mainNavigation.querySelectorAll("[data-view]").forEach(button => {
+        if (button.dataset.view === navigationView) button.setAttribute("aria-current", "page");
+        else button.removeAttribute("aria-current");
+      });
+      if (panelName === "itinerary") renderDay();
+      if (panelName === "map") renderMapDay();
+    }
+
+    document.querySelectorAll("[data-view]").forEach(button => {
+      button.addEventListener("click", () => showPanel(button.dataset.view));
+    });
+    document.querySelectorAll("[data-open-panel]").forEach(button => {
+      button.addEventListener("click", () => showPanel(button.dataset.openPanel));
+    });
+    document.querySelectorAll("[data-back-more]").forEach(button => {
+      button.addEventListener("click", () => showPanel("more"));
+    });
+    document.querySelectorAll("[data-back-home]").forEach(button => {
+      button.addEventListener("click", () => showPanel("home"));
+    });
+    document.querySelectorAll("[data-go-day]").forEach(button => {
       button.addEventListener("click", () => {
-        document.querySelectorAll("[data-view]").forEach((tab) => tab.setAttribute("aria-selected", String(tab === button)));
-        document.querySelectorAll("[data-panel]").forEach((panel) => { panel.hidden = panel.dataset.panel !== button.dataset.view; });
+        activeDay = Number(button.dataset.goDay);
+        document.querySelectorAll("[data-day]").forEach(tab => tab.setAttribute("aria-selected", String(Number(tab.dataset.day) === activeDay)));
+        showPanel("itinerary");
+      });
+    });
+    document.querySelectorAll("[data-map-day]").forEach(button => {
+      button.addEventListener("click", () => {
+        activeMapDay = Number(button.dataset.mapDay);
+        renderMapDay();
       });
     });
 
@@ -1323,6 +1690,7 @@ https://lucide.dev/license</metadata>
     }
 
     updateMountainWeather();
+    showPanel("home");
     renderDay();
     renderTodos();
     persistPacking(packingData);
