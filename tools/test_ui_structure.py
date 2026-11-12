@@ -76,6 +76,58 @@ class SiteStructureTests(unittest.TestCase):
     def test_sunrise_status_omits_expired_notice_warning(self):
         self.assertFalse("公告可能過期，請查看林鐵官方公告" in self.html)
 
+    def test_sunrise_itinerary_and_presale_reminder(self):
+        for expected in (
+            '["05:00", "起床、走路至沼平車站", "步行約 5 分鐘；記得帶早餐。", "步行"]',
+            '["05:30", "沼平車站 → 祝山站"',
+            '步行 祝山站 → 小笠原山',
+            '約 500 公尺大陡坡，約 15 分鐘腳程',
+            '["07:00", "回程搭小火車或遊園車 → 沼平車站"',
+            '前一日 16:30 前', '沼平車站無預售服務',
+            '沼平車站發車時間前 20 分鐘', '沼平至祝山約 17 分鐘',
+        ):
+            with self.subTest(expected=expected):
+                self.assertTrue(expected in self.html, expected)
+
+    def test_bus_fares_match_current_fare_lookup(self):
+        for expected in (
+            "全票 $98 / 半票 $49（阿里山 → 奮起湖）",
+            "全票 $98（阿里山 → 奮起湖）",
+            "奮起湖 → 嘉義火車站：全票 $177 / 半票 $89",
+            "全票 $98、半票 $49",
+        ):
+            with self.subTest(expected=expected):
+                self.assertTrue(expected in self.html, f"Missing: {expected}")
+
+    def test_day_one_uses_ciyun_viewpoint_instead_of_museum(self):
+        self.assertFalse("阿里山博物館" in self.html, "Old museum stop remains")
+        for expected in ("慈雲觀景", "https://maps.app.goo.gl/Ce9h5sdyZfWVwozj8", "看夕陽雲海"):
+            with self.subTest(expected=expected):
+                self.assertTrue(expected in self.html, f"Missing: {expected}")
+
+    def test_updated_day_one_and_day_two_schedule(self):
+        for expected in (
+            '["13:00", "步行至遊客服務中心"', '商店買簡易午餐',
+            '["14:30", "步道健行"', '["15:00", "香林服務區吃小吃點心"',
+            '["16:00", "步道健行"', '["17:00", "慈雲觀景"',
+            '["17:30", "前往商店街"', '["18:00", "商店街晚餐"',
+            '["20:15", "飯店晚間回程接駁車"',
+            '["20:30", "入住阿里山閣大飯店"', '巨木群棧道2',
+            '步行約 5 分鐘；記得帶早餐。',
+            'https://maps.app.goo.gl/vPgLwCoidxHcEvE87',
+            'https://maps.app.goo.gl/2YxE1XsBzpFxUDYd6',
+            '["09:00", "退房"', '["09:20", "飯店接駁 → 阿里山旅客服務中心"',
+            '08:40 / 09:20 / 09:50', '["10:00", "步行至阿里山轉運站"',
+            '["10:10", "搭公車 7322A → 奮起湖"',
+            '["11:00", "奮起湖午餐與點心"', '["12:00", "百年肖楠林 · 散步"',
+            '奮起湖車站 14:31 開車', '嘉義車站 16:51 抵達',
+            '<td>嘉義縣公車 7322A</td><td>10:10</td><td>11:00</td>',
+        ):
+            with self.subTest(expected=expected):
+                self.assertTrue(expected in self.html, f"Missing: {expected}")
+        self.assertFalse('"先帶早餐；' in self.html, "Water trail note still says to bring breakfast")
+        self.assertFalse('"備註：可至商店買簡易午餐。' in self.html, "Lunch note still has the word 備註")
+
 
 if __name__ == "__main__":
     unittest.main()

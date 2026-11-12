@@ -1,5 +1,5 @@
 const CACHE_PREFIX = `alishan-trip-${new URL(self.registration.scope).pathname}-`;
-const CACHE_NAME = `${CACHE_PREFIX}v16`;
+const CACHE_NAME = `${CACHE_PREFIX}v17`;
 const SHELL_URL = new URL("index.html", self.registration.scope).href;
 const SUNRISE_STATUS_URL = new URL("sunrise-status.json", self.registration.scope).href;
 const ASSET_URLS = ["index.html", "manifest.json", "sunrise-status.json", "icon-192.png", "icon-512.png", "apple-touch-icon.png"]

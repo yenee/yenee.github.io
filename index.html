@@ -706,10 +706,10 @@ https://lucide.dev/license</metadata>
           <div class="table-wrap"><table>
             <thead><tr><th>路線</th><th>阿里山</th><th>奮起湖</th><th>嘉義</th><th>備註</th></tr></thead>
             <tbody>
-              <tr><td>嘉義縣公車 7322A</td><td>09:10</td><td>10:00</td><td>11:55・火車站</td><td>行程預計搭乘</td></tr>
-              <tr><td>台灣好行 7329A</td><td>10:10</td><td>11:00</td><td>13:10・高鐵站</td><td>全票 $99（阿里山 → 奮起湖）</td></tr>
-              <tr><td>台灣好行 7329A</td><td>12:20</td><td>13:20</td><td>15:20・高鐵站</td><td>全票 $99（阿里山 → 奮起湖）</td></tr>
-              <tr><td>台灣好行 7322D</td><td>14:10</td><td>15:10</td><td>17:10・火車站</td><td>全票 $99；奮起湖 → 嘉義台鐵站 $178</td></tr>
+              <tr><td>嘉義縣公車 7322A</td><td>10:10</td><td>11:00</td><td>12:55・火車站</td><td>全票 $98 / 半票 $49（阿里山 → 奮起湖）<br><a class="inline-map" href="https://www.taiwanbus.tw/eBUSPage/Query/QueryResult.aspx?rno=7322A&amp;rn=1602140284909&amp;lan=C#busSeats-0" target="_blank" rel="noopener noreferrer">票價查詢 ↗</a></td></tr>
+              <tr><td>台灣好行 7329A</td><td>10:10</td><td>11:00</td><td>13:10・高鐵站</td><td>全票 $98（阿里山 → 奮起湖）<br><a class="inline-map" href="https://www.taiwanbus.tw/eBUSPage/Query/QueryResult.aspx?rno=7329A&amp;rn=1712572227299&amp;lan=C#busSeats-0" target="_blank" rel="noopener noreferrer">票價查詢 ↗</a></td></tr>
+              <tr><td>台灣好行 7329A</td><td>12:20</td><td>13:20</td><td>15:20・高鐵站</td><td>全票 $98（阿里山 → 奮起湖）<br><a class="inline-map" href="https://www.taiwanbus.tw/eBUSPage/Query/QueryResult.aspx?rno=7329A&amp;rn=1712572227299&amp;lan=C#busSeats-0" target="_blank" rel="noopener noreferrer">票價查詢 ↗</a></td></tr>
+              <tr><td>台灣好行 7322D</td><td>14:10</td><td>15:10</td><td>17:10・火車站</td><td>奮起湖 → 嘉義火車站：全票 $177 / 半票 $89<br><a class="inline-map" href="https://www.taiwanbus.tw/eBUSPage/Query/QueryResult.aspx?rno=7322D&amp;rn=1712571640791&amp;lan=C#busSeats-0" target="_blank" rel="noopener noreferrer">票價查詢 ↗</a></td></tr>
             </tbody>
           </table></div>
         </div>
@@ -867,37 +867,40 @@ https://lucide.dev/license</metadata>
     const days = [
       {
         date: "2026/11/22（日）",
-        route: "高鐵南下 → 二延平茶園 → 阿里山閣 → 姊妹潭、巨木步道與博物館 → 商店街",
+        route: "高鐵南下 → 二延平茶園 → 阿里山閣 → 姊妹潭、巨木步道與慈雲觀景夕陽雲海 → 商店街",
         events: [
           ["07:30", "搭乘高鐵 0805 次", "桃園 07:34 → 新竹 07:47 → 嘉義 08:55", "搭車"],
           ["09:20", "阿里山郵輪式接駁專車集合", "09:30 發車｜嘉義高鐵站 2 號出口外大客車停靠區｜行程含森林遊樂區門票", "搭車"],
           ["10:40", "二延平步道觀景台", "", "景點"],
           ["12:50", "阿里山森林遊樂區", "", "園區"],
-          ["13:00", "步行至遊客服務中心", "抵達後請先致電 05-2679611 確認飯店接駁時間，再搭車前往飯店寄放行李", "步行"],
-          ["14:00", "步道健行", "飯店 → 姊妹潭 → 香林服務區", "步行", "day1-hike-first"],
-          ["14:30", "香林服務區吃午餐", "", "用餐", "day1-lunch"],
-          ["15:30", "步道健行", "香林服務區 → 巨木群棧道 → 阿里山博物館", "步行", "day1-hike-second"],
-          ["16:00", "前往商店街", "A. 交通小火車：神木車站 → 阿里山車站，16:10 末班車；全票 $100、半票 $50。\nB. 步行約 30 分鐘，或搭遊園車（全票 $70）", "搭車", "day1-shopping"],
-          ["17:00", "商店街晚餐", "", "用餐"],
-          ["19:15", "飯店晚間回程接駁車", "班次：18:15 / 19:15 / 20:15", "搭車"],
-          ["19:30", "入住阿里山閣大飯店", "", "住宿"]
+          ["13:00", "步行至遊客服務中心", "抵達後請先致電 05-2679611 確認飯店接駁時間，再搭車前往飯店寄放行李。\n觀日列車預售票提醒：必須於前一日 16:30 前，自行至阿里山車站售票處購票；沼平車站無預售服務。\n可至商店買簡易午餐。", "步行"],
+          ["14:30", "步道健行", "飯店 → 姊妹潭 → 香林服務區", "步行", "day1-hike-first"],
+          ["15:00", "香林服務區吃小吃點心", "", "用餐", "day1-lunch"],
+          ["16:00", "步道健行", "香林服務區 → 巨木群棧道2", "步行", "day1-hike-second"],
+          ["17:00", "慈雲觀景", "看夕陽雲海", "景點"],
+          ["17:30", "前往商店街", "A. 交通小火車：神木車站 → 阿里山車站，16:10 末班車；全票 $100、半票 $50。\nB. 步行約 30 分鐘，或搭遊園車（全票 $70）", "搭車", "day1-shopping"],
+          ["18:00", "商店街晚餐", "", "用餐"],
+          ["20:15", "飯店晚間回程接駁車", "班次：18:15 / 19:15 / 20:15", "搭車"],
+          ["20:30", "入住阿里山閣大飯店", "", "住宿"]
         ]
       },
       {
         date: "2026/11/23（一）",
-        route: "小笠原日出 → 奮起湖老街便當 → 杉墨日禾下午茶 → 和牛燒肉",
+        route: "小笠原日出 → 水山步道 → 奮起湖老街便當 → 杉墨日禾下午茶 → 和牛燒肉",
         events: [
-          ["", "沼平車站 → 祝山站", "", "搭車"],
-          ["", "步行 10 分鐘 → 小笠原山", "", "步行"],
-          ["07:30", "早餐", "前一天先買好", "用餐"],
-          ["08:30", "退房", "", "住宿"],
-          ["08:40", "飯店接駁 → 阿里山旅客服務中心", "班次：08:00 / 08:40 / 09:20", "搭車"],
-          ["09:00", "步行至阿里山轉運站", "阿里山旅客服務中心 → 阿里山轉運站，步行約 10 分鐘", "步行"],
-          ["09:10", "搭公車 7322A → 奮起湖", "阿里山轉運站發車 → 奮起湖第一停車場；預計 10:00 抵達奮起湖", "搭車"],
-          ["10:00", "奮起湖午餐與點心", "午餐：奮起湖大飯店便當\n點心：一品香野生愛玉、月台茶香銅鑼燒、街仔尾阿嬤草仔粿、百年檜木甜甜圈", "用餐"],
-          ["11:30", "百年肖楠林 · 散步", "", "園區"],
+          ["05:00", "起床、走路至沼平車站", "步行約 5 分鐘；記得帶早餐。", "步行"],
+          ["05:30", "沼平車站 → 祝山站", "開站、進站與售票：沼平車站發車時間前 20 分鐘。\n觀日火車路線：阿里山車站 → 沼平車站 → 祝山車站，全程約半小時；沼平至祝山約 17 分鐘。", "搭車"],
+          ["", "步行 祝山站 → 小笠原山", "約 500 公尺大陡坡，約 15 分鐘腳程。", "步行"],
+          ["07:00", "回程搭小火車或遊園車 → 沼平車站", "", "搭車"],
+          ["07:30", "水山步道", "步道入口與路線地圖請見：", "步行", "day2-shuishan"],
+          ["09:00", "退房", "", "住宿"],
+          ["09:20", "飯店接駁 → 阿里山旅客服務中心", "班次：08:40 / 09:20 / 09:50", "搭車"],
+          ["10:00", "步行至阿里山轉運站", "阿里山旅客服務中心 → 阿里山轉運站，步行約 10 分鐘", "步行"],
+          ["10:10", "搭公車 7322A → 奮起湖", "阿里山轉運站發車 → 奮起湖第一停車場；預計 11:00 抵達奮起湖。全票 $98、半票 $49。", "搭車"],
+          ["11:00", "奮起湖午餐與點心", "午餐：奮起湖大飯店便當\n點心：一品香野生愛玉、月台茶香銅鑼燒、街仔尾阿嬤草仔粿、百年檜木甜甜圈", "用餐"],
+          ["12:00", "百年肖楠林 · 散步", "", "園區"],
           ["12:30", "杉墨日禾下午茶", "已訂位", "用餐"],
-          ["14:20", "搭阿里山號 → 嘉義市區", "奮起湖車站 → 嘉義車站", "搭車"],
+          ["14:20", "搭阿里山號 → 嘉義市區", "奮起湖車站 14:31 開車 → 嘉義車站 16:51 抵達", "搭車"],
           ["17:00", "嘉義火車站 → 觀止飯店", "搭乘飯店接駁", "搭車"],
           ["17:30", "入住嘉義觀止飯店", "觀止下午茶自助 14:00–18:00，最晚取餐 17:30；提供各類點心、餅乾、蛋糕、豆花與咖啡飲品。", "住宿"],
           ["19:30", "燒肉觀止晚餐", "", "用餐"],
@@ -930,7 +933,7 @@ https://lucide.dev/license</metadata>
           ["姊妹潭", "阿里山姊妹潭", 23.518933, 120.8141845],
           ["香林服務區", "香林服務區", 23.5179504, 120.8103948],
           ["巨木群棧道（28 號巨木）", "巨木群棧道", 23.5191715, 120.8097219],
-          ["阿里山博物館", "阿里山博物館", 23.516855, 120.808334],
+          ["慈雲觀景", "慈雲觀景"],
           ["神木車站", "神木車站", 23.519174, 120.80668],
           ["阿里山車站", "阿里山車站", 23.5100782, 120.8042059]
         ]
@@ -942,6 +945,8 @@ https://lucide.dev/license</metadata>
           ["沼平車站", "沼平車站", 23.51441, 120.813853],
           ["祝山車站", "祝山車站", 23.510354, 120.8231009],
           ["小笠原山觀景台", "小笠原山觀景台 阿里山", 23.506129, 120.823798],
+          ["水山步道入口", "水山療癒步道入口"],
+          ["水山步道路線圖", "水山療癒步道地圖"],
           ["阿里山轉運站", "阿里山轉運站", 23.5083347, 120.8015244],
           ["奮起湖第一停車場", "奮起湖第一停車場", 23.5051246, 120.6948811],
           ["百年檜木甜甜圈", "百年檜木甜甜圈", 23.5037345, 120.6950206],
@@ -979,8 +984,10 @@ https://lucide.dev/license</metadata>
       "步道健行": [["姊妹潭", "阿里山姊妹潭"], ["香林服務區", "香林服務區"], ["巨木群棧道", "巨木群棧道"]],
       "神木車站 → 阿里山車站": [["神木車站", "神木車站"], ["阿里山車站", "阿里山車站"]],
       "入住阿里山閣大飯店": "阿里山閣大飯店",
+      "步道健行、慈雲觀景看夕陽雲海": "慈雲觀景",
+      "起床、走路至沼平車站": "沼平車站",
       "沼平車站 → 祝山站": [["沼平車站", "沼平車站"], ["祝山車站", "祝山車站"]],
-      "步行 10 分鐘 → 小笠原山": "小笠原山觀景台 阿里山",
+      "步行 祝山站 → 小笠原山": [["祝山站", "祝山車站"], ["小笠原山", "小笠原山觀景台 阿里山"]],
       "飯店接駁 → 阿里山旅客服務中心": "阿里山旅客服務中心",
       "嘉義火車站 → 觀止飯店": "嘉義車站 嘉義觀止",
       "夜宿嘉義觀止飯店": "嘉義觀止",
@@ -999,10 +1006,12 @@ https://lucide.dev/license</metadata>
       "二延平步道觀景台": "https://maps.app.goo.gl/QPhYnNRfs5UzkQtbA",
       "阿里山森林遊樂區": "https://maps.app.goo.gl/4CHUryA2a1RnKzws8",
       "阿里山閣大飯店": "https://maps.app.goo.gl/e8o1tLUcwPR3feD16",
-      "阿里山博物館": "https://maps.app.goo.gl/45Ng3i3ydcc4eSpb7",
+      "慈雲觀景": "https://maps.app.goo.gl/Ce9h5sdyZfWVwozj8",
       "阿里山姊妹潭": "https://maps.app.goo.gl/j8TNZUPPBpm3dJ5f7",
       "香林服務區": "https://maps.app.goo.gl/sDJxmGsbBS4SFgiE8",
       "巨木群棧道": "https://maps.app.goo.gl/fYNsg11SaFeSkbWG8",
+      "水山療癒步道入口": "https://maps.app.goo.gl/vPgLwCoidxHcEvE87",
+      "水山療癒步道地圖": "https://maps.app.goo.gl/2YxE1XsBzpFxUDYd6",
       "神木車站": "https://maps.app.goo.gl/TU1Cg26f2VnZWrzf8",
       "阿里山車站": "https://maps.app.goo.gl/XSmm7KauA2CfmhBm6",
       "遊園車": "https://maps.app.goo.gl/TbnwMtmT9csAn6Pi6",
@@ -1033,7 +1042,8 @@ https://lucide.dev/license</metadata>
       "阿里山郵輪式接駁專車集合": { field: "detail", places: [["嘉義高鐵站", "高鐵嘉義站"]] },
       "步行至遊客服務中心": { field: "title", places: [["遊客服務中心", "阿里山旅客服務中心"]] },
       "入住阿里山閣大飯店": { field: "title", places: [["阿里山閣大飯店", "阿里山閣大飯店"]] },
-      "步行 10 分鐘 → 小笠原山": { field: "title", places: [["小笠原山", "小笠原山觀景台 阿里山"]] },
+      "起床、走路至沼平車站": { field: "title", places: [["沼平車站", "沼平車站"]] },
+      "步行 祝山站 → 小笠原山": { field: "title", places: [["祝山站", "祝山車站"], ["小笠原山", "小笠原山觀景台 阿里山"]] },
       "飯店接駁 → 阿里山旅客服務中心": { field: "title", places: [["阿里山旅客服務中心", "阿里山旅客服務中心"]] },
       "步行至阿里山轉運站": { field: "detail", places: [["阿里山旅客服務中心", "阿里山旅客服務中心"], ["阿里山轉運站", "阿里山轉運站"]] },
       "搭公車 7322A → 奮起湖": { field: "detail", places: [["阿里山轉運站", "阿里山轉運站"], ["奮起湖第一停車場", "奮起湖第一停車場"]] },
@@ -1041,7 +1051,8 @@ https://lucide.dev/license</metadata>
       "檜意森活村、嘉義市區閒逛": { field: "title", places: [["檜意森活村", "檜意森活村 嘉義"]] },
       "day1-hike-first": { field: "detail", places: [["飯店", "阿里山閣大飯店"], ["姊妹潭", "阿里山姊妹潭"], ["香林服務區", "香林服務區"]] },
       "day1-lunch": { field: "title", places: [["香林服務區", "香林服務區"]] },
-      "day1-hike-second": { field: "detail", places: [["香林服務區", "香林服務區"], ["巨木群棧道", "巨木群棧道"], ["阿里山博物館", "阿里山博物館"]] },
+      "day1-hike-second": { field: "detail", places: [["香林服務區", "香林服務區"], ["巨木群棧道", "巨木群棧道"], ["慈雲觀景", "慈雲觀景"]] },
+      "day2-shuishan": { field: "detail", places: [["步道入口", "水山療癒步道入口"], ["路線地圖", "水山療癒步道地圖"]] },
       "day1-shopping": { field: "detail", places: [["神木車站", "神木車站"], ["阿里山車站", "阿里山車站"], ["遊園車", "遊園車"]] },
       "沼平車站 → 祝山站": { field: "title", places: [["沼平車站", "沼平車站"], ["祝山站", "祝山車站"]] },
       "嘉義火車站 → 觀止飯店": { field: "title", places: [["嘉義火車站", "嘉義車站"], ["觀止飯店", "嘉義觀止"]] },
@@ -1153,10 +1164,11 @@ https://lucide.dev/license</metadata>
           const isSunriseTrain = title === "沼平車站 → 祝山站";
           const eventDetail = detail
             ? `<p class="event-detail">${renderInlineMapText(detail, title, "detail", mapKey)}</p>`
-            : isSunriseTrain
-              ? '<p class="event-detail" role="status" aria-live="polite"><span id="sunrise-train-status">正在載入官方祝山線公告…</span> · <a class="inline-map" href="https://afrts.forest.gov.tw/TP01_1.aspx" target="_blank" rel="noopener noreferrer">林鐵官方公告 ↗</a></p>'
-              : "";
-          return `<li class="event"><time class="event-time"${isSunriseTrain ? ' id="sunrise-train-time"' : ""}>${time}</time><div class="event-body"><p class="event-title">${renderEventIcon(kind)}<span class="event-heading-text">${renderInlineMapText(title, title, "title", mapKey)}</span></p>${eventDetail}</div></li>`;
+            : "";
+          const sunriseDetail = isSunriseTrain
+            ? '<p class="event-detail" role="status" aria-live="polite"><span id="sunrise-train-status">正在載入官方祝山線公告…</span> · <a class="inline-map" href="https://afrts.forest.gov.tw/TP01_1.aspx" target="_blank" rel="noopener noreferrer">林鐵官方公告 ↗</a></p>'
+            : "";
+          return `<li class="event"><time class="event-time"${isSunriseTrain ? ' id="sunrise-train-time"' : ""}>${time}</time><div class="event-body"><p class="event-title">${renderEventIcon(kind)}<span class="event-heading-text">${renderInlineMapText(title, title, "title", mapKey)}</span></p>${sunriseDetail}${eventDetail}</div></li>`;
         }).join("") || '<li class="event"><p class="event-detail">沒有符合的行程，試試其他關鍵字。</p></li>'}</ol>
         ${activeDay === 2 ? '<p class="notice">租車安排尚未確認</p>' : ""}
       `;
