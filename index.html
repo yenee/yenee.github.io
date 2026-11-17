@@ -9,6 +9,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="阿里山嘉義慢旅">
   <link rel="manifest" href="./manifest.json">
+  <link rel="stylesheet" href="./vendor/leaflet/leaflet.css">
   <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
   <title>阿里山嘉義慢旅｜三天兩夜行程</title>
@@ -234,7 +235,11 @@
     .map-day-button[aria-pressed="true"] { border-color: var(--forest); background: var(--forest-light); color: var(--forest); }
     .map-layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(240px, .65fr); gap: 20px; align-items: start; }
     .map-frame-wrap { overflow: hidden; border: 1px solid var(--line); border-radius: 6px; background: var(--paper-light); }
-    .map-frame { display: block; width: 100%; aspect-ratio: 1.35; border: 0; background: var(--forest-light); }
+    .map-frame { display: block; width: 100%; min-height: 320px; aspect-ratio: 1.35; background: #e8edf0; }
+    .map-stop-marker-wrap { border: 0; background: transparent; }
+    .map-stop-marker { display: grid; place-items: center; width: 28px; height: 28px; border: 2px solid #fff; border-radius: 50%; background: var(--rust); box-shadow: 0 1px 5px rgba(0, 0, 0, .35); color: #fff; font: 700 12px/1 "Segoe UI", sans-serif; }
+    .map-route-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin: 0; padding: 8px 12px 0; color: var(--muted); font-size: 12px; }
+    .map-route-swatch { display: inline-block; width: 25px; border-top: 3px dashed var(--rust); }
     .map-frame-caption { margin: 0; padding: 9px 12px; color: var(--muted); font-size: 12px; }
     .map-offline { margin: 0; padding: 20px; color: var(--muted); font-size: 14px; }
     .map-stops { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
@@ -246,6 +251,17 @@
     .map-stop a { color: var(--ink); font-size: 14px; font-weight: 700; text-decoration-color: var(--rust); text-underline-offset: 3px; }
     .map-stop a { font-size: 12px; white-space: nowrap; }
     .map-source { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 14px; }
+    .map-reference-gallery { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .map-reference-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 12px; }
+    .map-reference-subheading { margin-top: 22px; }
+    .map-reference-heading h3 { margin: 0; color: var(--forest); font-size: 18px; }
+    .map-reference-heading p { margin: 0; color: var(--muted); font-size: 12px; }
+    .map-reference-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .map-reference-item { min-width: 0; margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 5px; background: var(--paper-light); }
+    .map-reference-image-link { display: block; background: #fff; }
+    .map-reference-item img { display: block; width: 100%; height: auto; }
+    .map-reference-item figcaption { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 10px; padding: 9px 11px; font-size: 13px; font-weight: 700; }
+    .map-reference-item figcaption a { color: var(--forest); font-size: 12px; text-underline-offset: 3px; white-space: nowrap; }
     .more-menu { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin: 18px 0 26px; }
     .more-item { display: flex; align-items: center; gap: 12px; min-height: 58px; padding: 10px 13px; border: 1px solid var(--line); border-radius: 5px; background: var(--paper-light); color: var(--ink); text-align: left; cursor: pointer; }
     .more-item:hover, .more-item:focus-visible { border-color: var(--forest); background: var(--forest-light); }
@@ -328,7 +344,8 @@
       .shuttle-grid { grid-template-columns: 1fr; }
       .shuttle-card { padding: 12px; }
       .map-layout { grid-template-columns: 1fr; }
-      .map-frame { aspect-ratio: 1.1; }
+      .map-frame { min-height: 340px; aspect-ratio: 1.1; }
+      .map-reference-grid { grid-template-columns: 1fr; }
       .more-menu { grid-template-columns: 1fr; gap: 7px; }
       .more-item { min-height: 54px; }
     }
@@ -423,6 +440,7 @@
     @media (max-width: 720px) {
       body[data-layout-mode="desktop"] .hero { grid-template-columns: minmax(0, 1.2fr) minmax(110px, .8fr); gap: 8px; padding: 22px 0 20px; }
       body[data-layout-mode="desktop"] .hero-art { width: 100%; max-height: 150px; }
+      body[data-layout-mode="desktop"] .hero-art { align-self: start; margin-top: 15px; }
       body[data-layout-mode="desktop"] h1 { font-size: 34px; }
     }
     @media (prefers-reduced-motion: no-preference) {
@@ -608,10 +626,10 @@ https://lucide.dev/license</metadata>
         </section>
       </section>
 
-      <section id="panel-itinerary" role="tabpanel" aria-labelledby="itinerary-heading" data-panel="itinerary" hidden>
+      <section id="panel-itinerary" role="tabpanel" aria-label="每日行程" data-panel="itinerary" hidden>
         <div class="panel-back"><button type="button" data-back-home>‹ 首頁</button></div>
         <div class="section-heading">
-          <div><h2 id="itinerary-heading">沿著山線慢慢走</h2><p>選擇日期查看當天的時間、移動方式與行程細節。</p></div>
+          <div><p>選擇日期查看當天的時間、移動方式與行程細節。</p></div>
           <div class="schedule-tools"><input class="search" id="schedule-search" type="search" placeholder="搜尋當日行程" aria-label="搜尋當日行程"></div>
         </div>
         <div class="day-tabs" role="tablist" aria-label="選擇行程日期">
@@ -632,12 +650,45 @@ https://lucide.dev/license</metadata>
         </div>
         <div class="map-layout">
           <div class="map-frame-wrap">
-            <iframe class="map-frame" id="map-frame" title="阿里山與嘉義行程地圖" loading="lazy"></iframe>
-            <p class="map-frame-caption" id="map-frame-caption">OpenStreetMap © contributors · 地圖底圖為實際地理資料，行程順序請以下方站點為準。</p>
+            <div class="map-frame" id="map-frame" role="region" aria-label="當日景點互動地圖"></div>
+            <p class="map-route-legend"><span class="map-route-swatch" aria-hidden="true"></span>順序線僅表示停留順序，不是實際道路或步道</p>
+            <p class="map-frame-caption" id="map-frame-caption">OSM 底圖與外部導航需連網；離線時仍可使用下方景點清單與已快取參考圖。</p>
           </div>
           <div><h3 class="transport-group">當日停留地點</h3><ol class="map-stops" id="map-stops"></ol></div>
         </div>
         <div class="map-source"><a class="official-link" href="https://recreation.forest.gov.tw/Forest/RA?typ_id=0500001" target="_blank" rel="noopener noreferrer">林業保育署・阿里山園區導覽與步道資料 ↗</a><a class="official-link" href="https://www.ali-nsa.net/zh-tw/attractions/map" target="_blank" rel="noopener noreferrer">阿里山國家風景區旅遊地圖 ↗</a></div>
+        <section class="map-reference-gallery" data-map-gallery="true" aria-labelledby="map-reference-heading">
+          <div class="map-reference-heading"><h3 id="map-reference-heading">阿里山園區地圖</h3><p>圖片由外部網站提供，需連網；點圖可開啟原圖，圖片權利屬原來源。</p></div>
+          <div class="map-reference-grid">
+            <figure class="map-reference-item">
+              <a class="map-reference-image-link" href="https://www.94iprofun.com/upload/images/MAP%E9%98%BF%E9%87%8C%E5%B1%B1%E5%9C%92%E5%8D%80%E5%85%A7-%E9%A3%AF%E5%BA%97%E4%B8%80%E8%A6%BD%E5%9C%96.jpg" target="_blank" rel="noopener noreferrer" aria-label="開啟阿里山園區飯店一覽圖原圖"><img src="https://www.94iprofun.com/upload/images/MAP%E9%98%BF%E9%87%8C%E5%B1%B1%E5%9C%92%E5%8D%80%E5%85%A7-%E9%A3%AF%E5%BA%97%E4%B8%80%E8%A6%BD%E5%9C%96.jpg" alt="阿里山園區飯店一覽圖" width="1288" height="919" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a>
+              <figcaption><span>園區飯店一覽</span><a href="https://www.94iprofun.com/hotel_detail.php?item=67" target="_blank" rel="noopener noreferrer">來源：94iFun ↗</a></figcaption>
+            </figure>
+            <figure class="map-reference-item">
+              <a class="map-reference-image-link" href="https://www.94iprofun.com/upload/images/%E5%9C%B0%E5%9C%96_%E9%98%BF%E9%87%8C%E5%B1%B1%E6%A3%AE%E6%9E%97%E5%9C%92%E5%8D%80%E5%9C%B0%E5%9C%96001.jpg" target="_blank" rel="noopener noreferrer" aria-label="開啟阿里山森林園區地圖 001 原圖"><img src="https://www.94iprofun.com/upload/images/%E5%9C%B0%E5%9C%96_%E9%98%BF%E9%87%8C%E5%B1%B1%E6%A3%AE%E6%9E%97%E5%9C%92%E5%8D%80%E5%9C%B0%E5%9C%96001.jpg" alt="阿里山森林園區地圖（001）" width="1754" height="1241" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a>
+              <figcaption><span>森林園區地圖（001）</span><a href="https://www.94iprofun.com/" target="_blank" rel="noopener noreferrer">來源：94iFun ↗</a></figcaption>
+            </figure>
+            <figure class="map-reference-item">
+              <a class="map-reference-image-link" href="https://www.94iprofun.com/upload/images/%E5%9C%B0%E5%9C%96_%E9%98%BF%E9%87%8C%E5%B1%B1%E6%A3%AE%E6%9E%97%E5%9C%92%E5%8D%80%E5%9C%B0%E5%9C%96.jpg" target="_blank" rel="noopener noreferrer" aria-label="開啟阿里山森林園區地圖原圖"><img src="https://www.94iprofun.com/upload/images/%E5%9C%B0%E5%9C%96_%E9%98%BF%E9%87%8C%E5%B1%B1%E6%A3%AE%E6%9E%97%E5%9C%92%E5%8D%80%E5%9C%B0%E5%9C%96.jpg" alt="阿里山森林園區地圖" width="3574" height="2550" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a>
+              <figcaption><span>森林園區地圖</span><a href="https://www.94iprofun.com/" target="_blank" rel="noopener noreferrer">來源：94iFun ↗</a></figcaption>
+            </figure>
+            <figure class="map-reference-item">
+              <a class="map-reference-image-link" href="https://www.94iprofun.com/upload/images/Map_%E5%A5%AE%E8%B5%B7%E6%B9%96001%20(1170%20x%20772).jpg" target="_blank" rel="noopener noreferrer" aria-label="開啟奮起湖地圖原圖"><img src="https://www.94iprofun.com/upload/images/Map_%E5%A5%AE%E8%B5%B7%E6%B9%96001%20(1170%20x%20772).jpg" alt="奮起湖地圖" width="1170" height="772" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a>
+              <figcaption><span>奮起湖地圖</span><a href="https://www.94iprofun.com/" target="_blank" rel="noopener noreferrer">來源：94iFun ↗</a></figcaption>
+            </figure>
+            <figure class="map-reference-item">
+              <a class="map-reference-image-link" href="https://static-assets.oen.tw/images/img-33BAFiaFOGz92cZTk4dAilqfq4c.jpg" target="_blank" rel="noopener noreferrer" aria-label="開啟阿里山地圖參考圖原圖"><img src="https://static-assets.oen.tw/images/img-33BAFiaFOGz92cZTk4dAilqfq4c.jpg" alt="阿里山地圖參考圖" width="4096" height="4278" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a>
+              <figcaption><span>阿里山地圖參考</span><a href="https://static-assets.oen.tw/images/img-33BAFiaFOGz92cZTk4dAilqfq4c.jpg" target="_blank" rel="noopener noreferrer">來源：OEN ↗</a></figcaption>
+            </figure>
+          </div>
+          <div class="map-reference-heading map-reference-subheading"><h3>水山療癒步道</h3><p>圖片由外部網站提供，需連網；圖片權利屬原來源。</p></div>
+          <div class="map-reference-grid">
+            <figure class="map-reference-item">
+              <a class="map-reference-image-link" href="https://margaret.tw/wp-content/uploads/2013/11/%E6%B0%B4%E5%B1%B1%E7%99%82%E7%99%92%E6%AD%A5%E9%81%93photo6.jpg" target="_blank" rel="noopener noreferrer" aria-label="開啟水山療癒步道照片原圖"><img src="https://margaret.tw/wp-content/uploads/2013/11/%E6%B0%B4%E5%B1%B1%E7%99%82%E7%99%92%E6%AD%A5%E9%81%93photo6.jpg" alt="水山療癒步道環境照片" width="1080" height="739" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a>
+              <figcaption><span>步道環境</span><a href="https://margaret.tw/" target="_blank" rel="noopener noreferrer">來源：瑪格。圖寫生活 ↗</a></figcaption>
+            </figure>
+          </div>
+        </section>
       </section>
 
       <section id="panel-more" data-panel="more" aria-labelledby="more-heading" hidden>
@@ -863,6 +914,7 @@ https://lucide.dev/license</metadata>
     <footer>ALISHAN · NATURE · TRAIN · TRAVEL</footer>
   </div>
 
+  <script src="./vendor/leaflet/leaflet.js"></script>
   <script>
     const days = [
       {
@@ -896,11 +948,12 @@ https://lucide.dev/license</metadata>
           ["09:00", "退房", "", "住宿"],
           ["09:20", "飯店接駁 → 阿里山旅客服務中心", "班次：08:40 / 09:20 / 09:50", "搭車"],
           ["10:00", "步行至阿里山轉運站", "阿里山旅客服務中心 → 阿里山轉運站，步行約 10 分鐘", "步行"],
-          ["10:10", "搭公車 7322A → 奮起湖", "阿里山轉運站發車 → 奮起湖第一停車場；預計 11:00 抵達奮起湖。全票 $98、半票 $49。", "搭車"],
-          ["11:00", "奮起湖午餐與點心", "午餐：奮起湖大飯店便當\n點心：一品香野生愛玉、月台茶香銅鑼燒、街仔尾阿嬤草仔粿、百年檜木甜甜圈", "用餐"],
+          ["10:10", "搭台灣好行 7329A → 奮起湖", "阿里山轉運站發車 → 奮起湖第一停車場；預計 11:00 抵達奮起湖。全票 $98、半票 $49。", "搭車"],
+          ["11:00", "奮起湖車站寄放行李", "", "行李"],
+          ["11:30", "奮起湖午餐與點心", "午餐：奮起湖大飯店便當\n點心：一品香野生愛玉、月台茶香銅鑼燒、街仔尾阿嬤草仔粿、百年檜木甜甜圈", "用餐"],
           ["12:00", "百年肖楠林 · 散步", "", "園區"],
           ["12:30", "杉墨日禾下午茶", "已訂位", "用餐"],
-          ["14:20", "搭阿里山號 → 嘉義市區", "奮起湖車站 14:31 開車 → 嘉義車站 16:51 抵達", "搭車"],
+          ["14:00", "拿行李、搭阿里山號 → 嘉義市區", "奮起湖車站 14:31 開車 → 嘉義車站 16:51 抵達", "搭車"],
           ["17:00", "嘉義火車站 → 觀止飯店", "搭乘飯店接駁", "搭車"],
           ["17:30", "入住嘉義觀止飯店", "觀止下午茶自助 14:00–18:00，最晚取餐 17:30；提供各類點心、餅乾、蛋糕、豆花與咖啡飲品。", "住宿"],
           ["19:30", "燒肉觀止晚餐", "", "用餐"],
@@ -909,7 +962,7 @@ https://lucide.dev/license</metadata>
       },
       {
         date: "2026/11/24（二）",
-        route: "租車自駕 → 檜意森活村 → 嘉義市區小吃與甜點 → 高鐵返程",
+        route: "檜意森活村 → 嘉義市區小吃與甜點 → 高鐵返程",
         events: [
           ["09:00", "起床、飯店早餐", "", "用餐"],
           ["11:00", "退房", "飯店退房時間為 12:00 前", "住宿"],
@@ -917,7 +970,7 @@ https://lucide.dev/license</metadata>
           ["12:00", "嘉義市區小吃", "阿溪雞肉飯、公園老店涼麵、林聰明砂鍋魚頭", "用餐"],
           ["14:00", "嘉義市區甜點與逛街", "品安豆漿豆花、玖零甜食所、新華美西裝社", "用餐"],
           ["16:00", "彈性景點", "番路鄉農會飲冰柿茶集、KHTOY 絨毛玩偶旗艦館、嘉義市美術館、嘉義好市多", "彈性景點"],
-          ["18:30", "前往高鐵嘉義站還車", "850 次：嘉義 19:00 → 新竹 20:07 → 桃園 20:18", "搭車"]
+          ["18:30", "前往高鐵嘉義站", "850 次：嘉義 19:00 → 新竹 20:07 → 桃園 20:18", "搭車"]
         ]
       }
     ];
@@ -993,6 +1046,7 @@ https://lucide.dev/license</metadata>
       "夜宿嘉義觀止飯店": "嘉義觀止",
       "榮興茶行": "榮興茶行 嘉義",
       "檜意森活村、嘉義市區閒逛": "檜意森活村 嘉義",
+      "燒肉觀止晚餐": "燒肉觀止",
     };
 
     const placeMapUrls = {
@@ -1021,7 +1075,10 @@ https://lucide.dev/license</metadata>
       "奮起湖老街": "https://maps.app.goo.gl/tBrCeSQquLFtGsj3A",
       "奮起湖": "https://maps.app.goo.gl/tBrCeSQquLFtGsj3A",
       "奮起湖第一停車場": "https://maps.app.goo.gl/tBrCeSQquLFtGsj3A",
+      "奮起湖車站": "https://www.google.com/maps/search/?api=1&query=%E5%A5%AE%E8%B5%B7%E6%B9%96%E8%BB%8A%E7%AB%99",
       "奮起湖大飯店便當": "https://maps.app.goo.gl/KCXuWhVK2Q9vQRn77",
+      "一品香野生愛玉": "https://www.google.com/maps/search/?api=1&query=%E4%B8%80%E5%93%81%E9%A6%99%E9%87%8E%E7%94%9F%E6%84%9B%E7%8E%89",
+      "月台茶香銅鑼燒": "https://www.google.com/maps/search/?api=1&query=%E6%9C%88%E5%8F%B0%E8%8C%B6%E9%A6%99%E9%8A%85%E9%91%BC%E7%87%92",
       "百年肖楠林": "https://maps.app.goo.gl/GQNegL5VhNjB51DS6?g_st=ic",
       "嘉義市美術館": "https://www.google.com/maps/search/?api=1&query=%E5%98%89%E7%BE%A9%E5%B8%82%E7%BE%8E%E8%A1%93%E9%A4%A8",
       "嘉義好市多": "https://www.google.com/maps/search/?api=1&query=%E5%98%89%E7%BE%A9%E5%A5%BD%E5%B8%82%E5%A4%9A",
@@ -1031,6 +1088,7 @@ https://lucide.dev/license</metadata>
       "公園老店涼麵": "https://maps.app.goo.gl/seRJuvrUS1c9YoHeA",
       "林聰明砂鍋魚頭": "https://maps.app.goo.gl/Q33QAA7k8naJs56w8",
       "嘉義觀止": "https://maps.app.goo.gl/f3EDrnED7MsFKJhn8",
+      "燒肉觀止": "https://maps.app.goo.gl/x7MYVGzJ5BDuhRBA6",
       "榮興茶行 嘉義": "https://maps.app.goo.gl/E2UH5EyS7f6CLAry5",
       "檜意森活村 嘉義": "https://maps.app.goo.gl/Xsw5op6TAUZGD6qYA",
       "番路鄉農會飲冰柿茶集": "https://maps.app.goo.gl/EvYF7LQpKEMeJBPL6",
@@ -1046,7 +1104,8 @@ https://lucide.dev/license</metadata>
       "步行 祝山站 → 小笠原山": { field: "title", places: [["祝山站", "祝山車站"], ["小笠原山", "小笠原山觀景台 阿里山"]] },
       "飯店接駁 → 阿里山旅客服務中心": { field: "title", places: [["阿里山旅客服務中心", "阿里山旅客服務中心"]] },
       "步行至阿里山轉運站": { field: "detail", places: [["阿里山旅客服務中心", "阿里山旅客服務中心"], ["阿里山轉運站", "阿里山轉運站"]] },
-      "搭公車 7322A → 奮起湖": { field: "detail", places: [["阿里山轉運站", "阿里山轉運站"], ["奮起湖第一停車場", "奮起湖第一停車場"]] },
+      "搭台灣好行 7329A → 奮起湖": { field: "detail", places: [["阿里山轉運站", "阿里山轉運站"], ["奮起湖第一停車場", "奮起湖第一停車場"]] },
+      "奮起湖車站寄放行李": { field: "title", places: [["奮起湖車站", "奮起湖車站"]] },
       "夜宿嘉義觀止飯店": { field: "title", places: [["嘉義觀止飯店", "嘉義觀止"]] },
       "檜意森活村、嘉義市區閒逛": { field: "title", places: [["檜意森活村", "檜意森活村 嘉義"]] },
       "day1-hike-first": { field: "detail", places: [["飯店", "阿里山閣大飯店"], ["姊妹潭", "阿里山姊妹潭"], ["香林服務區", "香林服務區"]] },
@@ -1056,14 +1115,15 @@ https://lucide.dev/license</metadata>
       "day1-shopping": { field: "detail", places: [["神木車站", "神木車站"], ["阿里山車站", "阿里山車站"], ["遊園車", "遊園車"]] },
       "沼平車站 → 祝山站": { field: "title", places: [["沼平車站", "沼平車站"], ["祝山站", "祝山車站"]] },
       "嘉義火車站 → 觀止飯店": { field: "title", places: [["嘉義火車站", "嘉義車站"], ["觀止飯店", "嘉義觀止"]] },
-      "搭阿里山號 → 嘉義市區": { field: "detail", places: [["奮起湖車站", "奮起湖車站"], ["嘉義車站", "嘉義車站"]] },
+      "拿行李、搭阿里山號 → 嘉義市區": { field: "detail", places: [["奮起湖車站", "奮起湖車站"], ["嘉義車站", "嘉義車站"]] },
+      "前往高鐵嘉義站": { field: "detail", places: [["嘉義", "高鐵嘉義站"], ["新竹", "新竹高鐵站"], ["桃園", "桃園高鐵站"]] },
       "奮起湖午餐與點心": { field: "detail", places: [["奮起湖大飯店便當", "奮起湖大飯店便當"], ["一品香野生愛玉", "一品香野生愛玉"], ["月台茶香銅鑼燒", "月台茶香銅鑼燒"], ["街仔尾阿嬤草仔粿", "街仔尾阿嬤草仔粿"], ["百年檜木甜甜圈", "百年檜木甜甜圈"]] },
       "百年肖楠林 · 散步": { field: "title", places: [["百年肖楠林", "百年肖楠林"]] },
       "檜意森活村 · 走走": { field: "title", places: [["檜意森活村", "檜意森活村 嘉義"]] },
       "嘉義市區小吃": { field: "detail", places: [["阿溪雞肉飯", "阿溪雞肉飯"], ["公園老店涼麵", "公園老店涼麵"], ["林聰明砂鍋魚頭", "林聰明砂鍋魚頭"]] },
       "嘉義市區甜點與逛街": { field: "detail", places: [["品安豆漿豆花", "品安豆漿豆花"], ["玖零甜食所", "玖零甜食所"], ["新華美西裝社", "新華美西裝社"]] },
       "彈性景點": { field: "detail", places: [["番路鄉農會飲冰柿茶集", "番路鄉農會飲冰柿茶集"], ["KHTOY 絨毛玩偶旗艦館", "KHTOY 絨毛玩偶旗艦館 嘉義"], ["嘉義市美術館", "嘉義市美術館"], ["嘉義好市多", "嘉義好市多"]] },
-      "前往高鐵嘉義站還車": { field: "detail", places: [["嘉義", "高鐵嘉義站"], ["新竹", "新竹高鐵站"], ["桃園", "桃園高鐵站"]] }
+      "前往高鐵嘉義站": { field: "detail", places: [["嘉義", "高鐵嘉義站"], ["新竹", "新竹高鐵站"], ["桃園", "桃園高鐵站"]] }
     };
 
     const bookings = [
@@ -1074,9 +1134,8 @@ https://lucide.dev/license</metadata>
       { id: "lion-tour", name: "阿里山郵輪式接駁專車", meta: "11/22 · $550 含園區門票 · 09:30 高鐵站發車", done: true, url: "https://activity.liontravel.com/detail/G26000RM-%E5%98%89%E7%BE%A9-%E9%98%BF%E9%87%8C%E5%B1%B1FunTOUR%E9%83%B5%E8%BC%AA%E5%BC%8F%E5%B7%B4%E5%A3%AB-%E5%8E%BB%E7%A8%8B--%E9%80%81%E9%98%BF%E9%87%8C%E5%B1%B1%E6%A3%AE%E6%9E%97%E9%81%8A%E6%A8%82%E5%8D%80%E9%96%80%E7%A5%A8-%E5%98%89%E7%BE%A9%E5%87%BA%E7%99%BC-2026%E5%B9%B411%E6%9C%88%E8%B5%B7%E6%94%B9%E7%89%88?Foreign=0" },
       { id: "thsr-out", name: "去程高鐵 805", meta: "11/22 · 新竹 → 嘉義 · 桃園 07:34 / 新竹 07:47 / 嘉義 08:55", done: true },
       { id: "thsr-return", name: "回程高鐵 850", meta: "11/24 · 嘉義 19:00 → 新竹 20:07 → 桃園 20:18", done: true },
-      { id: "forest-line", name: "林鐵本線小火車", meta: "11/23 · 11/09 開放預訂 · 全段 $600 / 奮起湖區間 $384", done: false, url: "https://afrts.forest.gov.tw/TP01_1.aspx" },
+      { id: "forest-line", name: "林鐵本線小火車", meta: "11/23 · 11/09 開放預訂 · 全段 $600 / 奮起湖區間 $384", done: true, url: "https://afrts.forest.gov.tw/TP01_1.aspx" },
       { id: "sunrise", name: "祝山日出小火車", meta: "11/23 · 11/09 開放預訂 · 全票 $150 / 優待票 $75", done: false, url: "https://afrts.forest.gov.tw/TP01_1.aspx" },
-      { id: "car", name: "嘉義市區租車", meta: "Day 3 自駕 · 預訂資訊待確認", done: false }
     ];
 
     const packingGroups = [
@@ -1170,7 +1229,6 @@ https://lucide.dev/license</metadata>
             : "";
           return `<li class="event"><time class="event-time"${isSunriseTrain ? ' id="sunrise-train-time"' : ""}>${time}</time><div class="event-body"><p class="event-title">${renderEventIcon(kind)}<span class="event-heading-text">${renderInlineMapText(title, title, "title", mapKey)}</span></p>${sunriseDetail}${eventDetail}</div></li>`;
         }).join("") || '<li class="event"><p class="event-detail">沒有符合的行程，試試其他關鍵字。</p></li>'}</ol>
-        ${activeDay === 2 ? '<p class="notice">租車安排尚未確認</p>' : ""}
       `;
       if (activeDay === 1) {
         updateSunriseNotice();
@@ -1181,27 +1239,39 @@ https://lucide.dev/license</metadata>
     const mapStops = document.querySelector("#map-stops");
     const mapFrameCaption = document.querySelector("#map-frame-caption");
     let activeMapDay = 0;
-    let activeMapStop = 0;
+    let tripMap = null;
+    const activeMapMarkers = new Map();
+    function initializeTripMap() {
+      if (tripMap) return;
+      tripMap = L.map(mapFrame, { scrollWheelZoom: false, preferCanvas: true }).setView([23.51, 120.81], 10);
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(tripMap);
+      mapMarkerLayer = L.layerGroup().addTo(tripMap);
+      mapRouteLine = L.polyline([], {
+        color: "#a64e35", weight: 3, opacity: 0.85, dashArray: "7 7", lineCap: "round"
+      }).addTo(tripMap);
+    }
 
     function focusMapStop(stopIndex) {
       const route = mapDays[activeMapDay];
       const stop = route.stops[stopIndex];
-      if (!stop || !Number.isFinite(stop[2]) || !Number.isFinite(stop[3])) return;
-      activeMapStop = stopIndex;
-      const parameters = new URLSearchParams({
-        bbox: route.bbox, layer: "mapnik", marker: `${stop[2]},${stop[3]}`
-      });
-      mapFrame.src = `https://www.openstreetmap.org/export/embed.html?${parameters}`;
-      mapFrameCaption.textContent = `${route.title} · 目前標記：${stop[0]}。OpenStreetMap © contributors；底圖需連網，離線時仍可使用下方地點清單與導航連結。`;
+      const marker = activeMapMarkers.get(stopIndex);
+      if (!stop || !marker) return;
+      tripMap.panTo([stop[2], stop[3]], { animate: true, duration: 0.25 });
       mapStops.querySelectorAll("[data-map-stop]").forEach(button => {
-        button.setAttribute("aria-pressed", String(Number(button.dataset.mapStop) === activeMapStop));
+        button.setAttribute("aria-pressed", String(Number(button.dataset.mapStop) === stopIndex));
       });
     }
 
     function renderMapDay() {
       const route = mapDays[activeMapDay];
-      mapFrame.title = `${route.title}實際地圖`;
+      initializeTripMap();
       mapStops.replaceChildren();
+      mapMarkerLayer.clearLayers();
+      activeMapMarkers.clear();
+      const locatedCoordinates = [];
       route.stops.forEach(([label, place, latitude, longitude], index) => {
         const row = document.createElement("li");
         row.className = "map-stop";
@@ -1217,6 +1287,22 @@ https://lucide.dev/license</metadata>
         select.disabled = !Number.isFinite(latitude) || !Number.isFinite(longitude);
         if (select.disabled) select.title = "座標未核實，請使用右側導航連結";
         select.addEventListener("click", () => focusMapStop(index));
+        if (!select.disabled) {
+          const markerElement = document.createElement("span");
+          markerElement.className = "map-stop-marker";
+          markerElement.textContent = String(index + 1);
+          markerElement.setAttribute("role", "img");
+          markerElement.setAttribute("aria-label", `景點 ${index + 1}：${label}`);
+          markerElement.title = `${index + 1}. ${label}`;
+          const marker = L.marker([latitude, longitude], {
+            title: label,
+            alt: label,
+            keyboard: true,
+            icon: L.divIcon({ className: "map-stop-marker-wrap", html: markerElement.outerHTML, iconSize: [28, 28], iconAnchor: [14, 14] })
+          }).addTo(mapMarkerLayer).bindTooltip(`${index + 1}. ${label}`);
+          activeMapMarkers.set(index, marker);
+          locatedCoordinates.push([latitude, longitude]);
+        }
         const link = document.createElement("a");
         link.textContent = "導航";
         link.setAttribute("aria-label", `開啟${label}導航`);
@@ -1226,10 +1312,16 @@ https://lucide.dev/license</metadata>
         row.append(number, select, link);
         mapStops.append(row);
       });
-      focusMapStop(0);
+      mapRouteLine.setLatLngs(locatedCoordinates);
+      mapFrameCaption.textContent = `${route.title} · 已標示 ${locatedCoordinates.length} 個有座標地點。虛線僅表示停留順序，不是實際道路或步道；底圖需連網。`;
+      if (locatedCoordinates.length > 1) {
+        tripMap.fitBounds(mapRouteLine.getBounds().pad(0.12), { maxZoom: 14, animate: false });
+      }
+      else if (locatedCoordinates.length === 1) tripMap.setView(locatedCoordinates[0], 14);
       document.querySelectorAll("[data-map-day]").forEach(button => {
         button.setAttribute("aria-pressed", String(Number(button.dataset.mapDay) === activeMapDay));
       });
+      requestAnimationFrame(() => tripMap.invalidateSize({ pan: false }));
     }
 
     const sunriseNoticeStorageKey = "alishan-trip-sunrise-notice";
